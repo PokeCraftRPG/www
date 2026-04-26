@@ -1,0 +1,44 @@
+import { useHead, useRoute, useRuntimeConfig } from "nuxt/app";
+
+type SeoMeta = {
+  title?: ComputedRef<string> | string | null;
+  description?: ComputedRef<string> | string | null;
+};
+
+export function useSeo(meta?: SeoMeta): void {
+  const config = useRuntimeConfig();
+  const route = useRoute();
+  const href: string = config.public.baseUrl + route.fullPath;
+  const locale: string = "fr";
+
+  if (meta) {
+    useSeoMeta({
+      robots: "noindex",
+      title: meta.title ?? undefined,
+      description: meta.description ?? undefined,
+      ogTitle: meta.title ?? undefined,
+      ogDescription: meta.description ?? undefined,
+      ogImage: config.public.baseUrl + "/og-image.jpg",
+      ogUrl: href,
+      ogLocale: locale,
+      ogSiteName: "PokéCraft",
+    });
+  }
+
+  useHead(() => ({
+    htmlAttrs: {
+      lang: locale,
+    },
+    link: [
+      {
+        rel: "canonical",
+        href,
+      },
+      {
+        rel: "alternate",
+        hreflang: locale,
+        href,
+      },
+    ],
+  }));
+}

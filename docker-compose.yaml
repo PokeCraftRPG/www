@@ -1,0 +1,11 @@
+name: pokecraft_www
+services:
+  pokecraft_www:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: pokecraft_www
+    container_name: PokeCraft_www
+    restart: unless-stopped
+    ports:
+      - 18099:80

@@ -1,0 +1,10 @@
+{
+  "brand": "PokéCraft",
+  "loading": "Loading…",
+  "theme": {
+    "title": "Theme",
+    "auto": "Auto",
+    "dark": "Dark",
+    "light": "Light"
+  }
+}
