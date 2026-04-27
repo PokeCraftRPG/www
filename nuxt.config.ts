@@ -26,6 +26,7 @@ export default defineNuxtConfig({
     public: {
       apiBaseUrl: "http://localhost:8099",
       baseUrl: "http://localhost:3000",
+      imgSrcFormat: "https://pokegame.blob.core.windows.net/pokemon/{key}.png",
       version: pkg.version,
     },
   },

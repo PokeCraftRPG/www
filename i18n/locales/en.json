@@ -1,6 +1,38 @@
 {
   "brand": "PokéCraft",
   "loading": "Loading…",
+  "pokemon": {
+    "category": {
+      "options": {
+        "Baby": "Baby",
+        "Legendary": "Legendary",
+        "Mythical": "Mythical",
+        "Standard": "Standard"
+      }
+    },
+    "details": "Details",
+    "forms": {
+      "kind": {
+        "options": {
+          "Alternative": "Alternative",
+          "BattleOnly": "Battle Only",
+          "Default": "Default",
+          "Mega": "Mega"
+        }
+      },
+      "title": "Forms"
+    },
+    "sprite": {
+      "alt": "{name}’s Sprite"
+    },
+    "varieties": {
+      "genus": {
+        "format": "The {genus} Pokémon"
+      },
+      "isDefault": "Default",
+      "title": "Varieties"
+    }
+  },
   "theme": {
     "title": "Theme",
     "auto": "Auto",
