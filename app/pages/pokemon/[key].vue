@@ -26,19 +26,30 @@
       <template v-if="variety && form">
         <h2 class="h3">{{ variety.genus ? $t("pokemon.varieties.genus.format", { genus: variety.genus }) : $t("pokemon.details") }}</h2>
         <p v-if="variety.description">{{ variety.description }}</p>
+        <div class="mb-4 row">
+          <PokemonSizeCategorySelect class="col" v-model="sizeCategory" />
+          <PokemonLevelInput class="col" v-model="level" />
+        </div>
+        <PokemonDetail :form="form" :level="level" :size-category="sizeCategory" :species="species" :variety="variety" />
+        <h3 class="h5">{{ $t("pokemon.attributes.title") }}</h3>
+        <PokemonAttributes :form="form" />
+        <h3 class="h5">{{ $t("pokemon.capture.title") }}</h3>
+        <PokemonCapture :form="form" :level="level" :size-category="sizeCategory" :species="species" />
       </template>
     </template>
   </main>
 </template>
 
 <script setup lang="ts">
-import type { Form, Species, Variety } from "~/types/pokemon";
+import type { Form, SizeCategory, Species, Variety } from "~/types/pokemon";
 
 const config = useRuntimeConfig();
 const route = useRoute();
 
 const form = ref<Form | undefined>();
 const forms = ref<Form[]>([]);
+const level = ref<number>(1);
+const sizeCategory = ref<SizeCategory>("Medium");
 const variety = ref<Variety | undefined>();
 
 const key = computed<string>(() => (Array.isArray(route.params.key) ? route.params.key[0] : route.params.key) ?? "");
@@ -109,19 +120,7 @@ watch(
 );
 
 /* TODO(fpion):
-
- * baseFriendship & catchRate
- * growthRate & experience yield
- * eggCycles & eggGroups
- *
- * genderRatio
- * canChangeForm
  * moves
- *
- * height & weight
- * types
- * abilities
- * baseStatistics
  * hasGenderDifferences & sprites
  */
 

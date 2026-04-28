@@ -6,6 +6,9 @@
         <h3 v-if="variety.isDefault" class="card-subtitle h6 mb-2 text-body-secondary">
           <TarBadge pill variant="primary"><font-awesome-icon icon="fas fa-check" />&nbsp;{{ $t("pokemon.varieties.isDefault") }}</TarBadge>
         </h3>
+        <TarBadge v-if="variety.canChangeForm" pill variant="secondary">
+          <font-awesome-icon icon="fas fa-mask" />&nbsp;{{ $t("pokemon.varieties.canChangeForm") }}
+        </TarBadge>
       </div>
       <div class="text-end">
         <TarImage :alt="alt" :src="src" width="100" />

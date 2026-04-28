@@ -2,6 +2,41 @@
   "brand": "PokéCraft",
   "loading": "Loading…",
   "pokemon": {
+    "abilities": {
+      "title": "Abilities"
+    },
+    "attributes": {
+      "options": {},
+      "title": "Attributes"
+    },
+    "breeding": {
+      "cycles": "cycle | cycle | cycles",
+      "group": {
+        "options": {
+          "Amorphous": "Amorphous",
+          "Bug": "Bug",
+          "Ditto": "Ditto",
+          "Dragon": "Dragon",
+          "Fairy": "Fairy",
+          "Field": "Field",
+          "Flying": "Flying",
+          "Grass": "Grass",
+          "HumanLike": "Human-Like",
+          "Mineral": "Mineral",
+          "Monster": "Monster",
+          "NoEggsDiscovered": "No Eggs Discovered",
+          "Water1": "Water 1",
+          "Water2": "Water 2",
+          "Water3": "Water 3"
+        }
+      },
+      "label": "Breeding"
+    },
+    "capture": {
+      "baseFriendship": "Starting Friendship",
+      "difficulty": "Difficulty Class (DC)",
+      "title": "Capture"
+    },
     "category": {
       "options": {
         "Baby": "Baby",
@@ -11,6 +46,10 @@
       }
     },
     "details": "Details",
+    "experience": {
+      "candies": "candy | candy | candies",
+      "label": "Experience"
+    },
     "forms": {
       "kind": {
         "options": {
@@ -20,17 +59,57 @@
           "Mega": "Mega"
         }
       },
-      "title": "Forms"
+      "title": "Forms",
+      "types": "Types"
+    },
+    "gender": {
+      "female": "Female",
+      "label": "Gender",
+      "male": "Male",
+      "unknown": "Unknown"
+    },
+    "growthRate": {
+      "options": {
+        "Fast": "Fast",
+        "Medium": "Medium",
+        "Slow": "Slow"
+      }
+    },
+    "level": {
+      "label": "Level"
+    },
+    "size": {
+      "category": {
+        "label": "Size Category",
+        "options": {
+          "ExtraLarge": "Extra Large (XL)",
+          "ExtraSmall": "Extra Small (XS)",
+          "Large": "Large (L)",
+          "Medium": "Medium (M)",
+          "Small": "Small (S)"
+        },
+        "placeholder": "Select a size category"
+      },
+      "label": "Size"
     },
     "sprite": {
       "alt": "{name}’s Sprite"
     },
+    "type": {
+      "alt": "{type} Type Badge"
+    },
     "varieties": {
+      "canChangeForm": "Metamorph",
       "genus": {
         "format": "The {genus} Pokémon"
       },
       "isDefault": "Default",
       "title": "Varieties"
+    },
+    "vitality": {
+      "current": "Current Vitality",
+      "label": "Vitality",
+      "maximum": "Maximum Vitality"
     }
   },
   "theme": {
@@ -38,5 +117,9 @@
     "auto": "Auto",
     "dark": "Dark",
     "light": "Light"
+  },
+  "units": {
+    "kg": "kg",
+    "m": "m"
   }
 }

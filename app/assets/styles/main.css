@@ -28,3 +28,7 @@ button:disabled {
 [data-bs-theme="dark"] .selected {
   background-color: #2a2a2a;
 }
+
+.w-fifth {
+  width: 20% !important;
+}

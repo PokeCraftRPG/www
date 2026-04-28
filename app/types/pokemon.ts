@@ -102,6 +102,8 @@ export type PokemonType =
   | "Steel"
   | "Water";
 
+export type SizeCategory = "ExtraSmall" | "Small" | "Medium" | "Large" | "ExtraLarge";
+
 export type Species = Aggregate & {
   number: number;
   category: SpeciesCategory;

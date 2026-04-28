@@ -1,0 +1,133 @@
+<template>
+  <table class="table table-striped text-center">
+    <tbody>
+      <tr>
+        <th scope="row" class="w-25">{{ $t("pokemon.forms.types") }}</th>
+        <td colspan="3" class="w-75">
+          <div class="d-flex justify-content-center align-items-center gap-2 flex-wrap">
+            <PokemonTypeBadge :type="form.types.primary" />
+            <PokemonTypeBadge v-if="form.types.secondary" :type="form.types.secondary" />
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <th scope="row">{{ $t("pokemon.abilities.title") }}</th>
+        <td>
+          <a v-if="form.abilities.primary" href="#">{{ form.abilities.primary.name ?? form.abilities.primary.key }}</a>
+          <span v-else class="text-muted">{{ "—" }}</span>
+        </td>
+        <td>
+          <a v-if="form.abilities.secondary" href="#">{{ form.abilities.secondary.name ?? form.abilities.secondary.key }}</a>
+          <span v-else class="text-muted">{{ "—" }}</span>
+        </td>
+        <td>
+          <a v-if="form.abilities.hidden" href="#">
+            <font-awesome-icon icon="fas fa-eye-slash" />&nbsp;{{ form.abilities.hidden.name ?? form.abilities.hidden.key }}
+          </a>
+          <span v-else class="text-muted">{{ "—" }}</span>
+        </td>
+      </tr>
+      <tr>
+        <th scope="row">{{ $t("pokemon.gender.label") }}</th>
+        <td v-if="isGenderUnknown" colspan="3"><font-awesome-icon icon="fas fa-question" />&nbsp;{{ $t("pokemon.gender.unknown") }}</td>
+        <template v-else>
+          <td>{{ $n(male ?? 0, "genderRatio") }}&nbsp;<font-awesome-icon icon="fa fa-mars" />&nbsp;{{ $t("pokemon.gender.male") }}</td>
+          <td>
+            <TarProgress :value="(male ?? 0) * 100" />
+          </td>
+          <td>{{ $n(female ?? 0, "genderRatio") }}&nbsp;<font-awesome-icon icon="fa fa-venus" />&nbsp;{{ $t("pokemon.gender.female") }}</td>
+        </template>
+      </tr>
+      <tr>
+        <th scope="row">{{ $t("pokemon.size.label") }}</th>
+        <td>{{ $t(`pokemon.size.category.options.${sizeCategory}`) }}</td>
+        <td>{{ $n(height, "height") }}&nbsp;{{ $t("units.m", height) }}</td>
+        <td>{{ $n(weight, "weight") }}&nbsp;{{ $t("units.kg", weight) }}</td>
+      </tr>
+      <tr>
+        <th scope="row">{{ $t("pokemon.breeding.label") }}</th>
+        <td>{{ $t(`pokemon.breeding.group.options.${species.eggGroups.primary}`) }}</td>
+        <td>
+          <template v-if="species.eggGroups.secondary">{{ $t(`pokemon.breeding.group.options.${species.eggGroups.secondary}`) }}</template>
+          <span v-else class="text-muted">{{ "—" }}</span>
+        </td>
+        <td>{{ $n(species.eggCycles, "integer") }}&nbsp;{{ $t("pokemon.breeding.cycles", species.eggCycles) }}</td>
+      </tr>
+      <tr>
+        <th scope="row">{{ $t("pokemon.experience.label") }}</th>
+        <td>
+          <a href="#">{{ growthRate }}</a>
+        </td>
+        <td>
+          <template v-if="candyCount">{{ $n(candyCount, "integer") }}&nbsp;{{ $t("pokemon.experience.candies", candyCount) }}</template>
+          <span v-else class="text-muted">{{ "—" }}</span>
+        </td>
+        <td>
+          <template v-if="candySize">{{ candySize }}</template>
+          <span v-else class="text-muted">{{ "—" }}</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</template>
+
+<script setup lang="ts">
+import type { Form, SizeCategory, Species, Variety } from "~/types/pokemon";
+
+const props = defineProps<{
+  form: Form;
+  level: number;
+  sizeCategory: SizeCategory;
+  species: Species;
+  variety: Variety;
+}>();
+
+const growthRate = computed<string>(() => {
+  switch (props.species.growthRate) {
+    case "Fluctuating":
+    case "Slow":
+      return $t("pokemon.growthRate.options.Slow");
+    case "Erratic":
+    case "Fast":
+      return $t("pokemon.growthRate.options.Fast");
+  }
+  return $t("pokemon.growthRate.options.Medium");
+});
+const candyCount = computed<number>(() => (props.level > 0 && props.level <= 100 ? 1 : 0));
+const candySize = computed<string>(() => {
+  if (props.level > 0 && props.level <= 100) {
+    if (props.level < 5) {
+      return "XS";
+    } else if (props.level < 20) {
+      return "S";
+    } else if (props.level < 50) {
+      return "M";
+    } else if (props.level < 75) {
+      return "L";
+    } else {
+      return "XL";
+    }
+  }
+  return "";
+});
+
+const isGenderUnknown = computed<boolean>(() => typeof props.variety.genderRatio !== "number");
+const female = computed<number | undefined>(() => (typeof props.variety.genderRatio === "number" ? (8 - props.variety.genderRatio) / 8 : undefined));
+const male = computed<number | undefined>(() => (typeof props.variety.genderRatio === "number" ? props.variety.genderRatio / 8 : undefined));
+
+const sizeMultiplier = computed<number>(() => {
+  switch (props.sizeCategory) {
+    case "ExtraSmall":
+      return 0.8;
+    case "Small":
+      return 0.9;
+    case "Large":
+      return 1.1;
+    case "ExtraLarge":
+      return 1.2;
+  }
+  return 1;
+});
+const height = computed<number>(() => (props.form.height / 10) * sizeMultiplier.value);
+const weight = computed<number>(() => (props.form.weight / 10) * sizeMultiplier.value);
+</script>
