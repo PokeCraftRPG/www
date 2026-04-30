@@ -130,4 +130,7 @@ const sizeMultiplier = computed<number>(() => {
 });
 const height = computed<number>(() => (props.form.height / 10) * sizeMultiplier.value);
 const weight = computed<number>(() => (props.form.weight / 10) * sizeMultiplier.value);
+
+// TODO(fpion): refactor calculations
+// TODO(fpion): mobile view (no table)
 </script>

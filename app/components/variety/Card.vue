@@ -11,7 +11,7 @@
         </TarBadge>
       </div>
       <div class="text-end">
-        <TarImage :alt="alt" :src="src" width="100" />
+        <PokemonSprite v-if="defaultForm" :form="defaultForm" width="100" />
       </div>
     </div>
   </TarCard>
@@ -22,7 +22,6 @@ import { parsingUtils } from "logitar-js";
 
 import type { Form, Variety } from "~/types/pokemon";
 
-const config = useRuntimeConfig();
 const { parseBoolean } = parsingUtils;
 
 const props = defineProps<{
@@ -30,7 +29,6 @@ const props = defineProps<{
   variety: Variety;
 }>();
 
-const alt = computed<string>(() => (defaultForm.value ? $t("pokemon.sprite.alt", { name: defaultForm.value.name ?? defaultForm.value.key }) : ""));
 const classes = computed<string[]>(() => {
   const classes: string[] = [];
   if (parseBoolean(props.selected)) {
@@ -41,6 +39,5 @@ const classes = computed<string[]>(() => {
   return classes;
 });
 const defaultForm = computed<Form | undefined>(() => sortForms(props.variety.forms)[0]);
-const src = computed<string>(() => (defaultForm.value ? config.public.imgSrcFormat.replace("{key}", defaultForm.value.key) : ""));
 const title = computed<string>(() => props.variety.name ?? props.variety.key);
 </script>

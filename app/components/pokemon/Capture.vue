@@ -1,21 +1,17 @@
 <template>
   <div>
-    <div class="mb-4 row">
-      <PokemonVitalityInput class="col" id="current-vitality" label="pokemon.vitality.current" :max="maximumVitality" v-model="currentVitality" />
-      <PokemonVitalityInput class="col" id="maximum-vitality" label="pokemon.vitality.maximum" v-model="maximumVitality" />
+    <div class="row">
+      <PokemonVitalityInput class="col-sm-6 mb-3" id="current-vitality" label="pokemon.vitality.current" :max="maximumVitality" v-model="currentVitality" />
+      <PokemonVitalityInput class="col-sm-6 mb-3" id="maximum-vitality" label="pokemon.vitality.maximum" v-model="maximumVitality" />
     </div>
-    <table class="table table-striped text-center">
-      <tbody>
-        <tr>
-          <th scope="row" class="w-50">{{ $t("pokemon.capture.difficulty") }}</th>
-          <td class="w-50">{{ $n(difficulty, "integer") }}</td>
-        </tr>
-        <tr>
-          <th scope="row">{{ $t("pokemon.capture.baseFriendship") }}</th>
-          <td>{{ $n(species.baseFriendship, "integer") }}</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="row">
+      <div class="col-sm-6 mb-3 text-center">
+        <TarCard class="d-flex flex-column h-100" :title="$t('pokemon.capture.difficulty')">{{ $n(difficulty, "integer") }}</TarCard>
+      </div>
+      <div class="col-sm-6 mb-3 text-center">
+        <TarCard class="d-flex flex-column h-100" :title="$t('pokemon.capture.baseFriendship')">{{ $n(species.baseFriendship * 0.4, "integer") }}</TarCard>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -35,7 +31,6 @@ const maximumVitality = ref<number>(0);
 const level = computed<number>(() => (props.level < 1 ? 1 : props.level > 100 ? 100 : props.level));
 
 const baseConstitution = computed<number>(() => {
-  console.log(props.form.baseStatistics.hp);
   let value: number = 0;
   if (props.form.baseStatistics.hp >= 255) {
     value = 260;
@@ -87,4 +82,6 @@ const difficulty = computed<number>(() => {
 });
 
 watch(constitution, (constitution) => (currentVitality.value = maximumVitality.value = constitution), { immediate: true });
+
+// TODO(fpion): refactor HP calculation
 </script>

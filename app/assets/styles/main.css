@@ -29,6 +29,14 @@ button:disabled {
   background-color: #2a2a2a;
 }
 
+.w-10 {
+  width: 10% !important;
+}
+
+.w-15 {
+  width: 15% !important;
+}
+
 .w-fifth {
   width: 20% !important;
 }

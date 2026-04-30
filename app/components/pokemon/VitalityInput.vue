@@ -7,7 +7,6 @@
     :max="max"
     :model-value="modelValue?.toString()"
     :placeholder="$t(label)"
-    required
     :status="status"
     step="1"
     type="number"

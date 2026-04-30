@@ -26,15 +26,21 @@
       <template v-if="variety && form">
         <h2 class="h3">{{ variety.genus ? $t("pokemon.varieties.genus.format", { genus: variety.genus }) : $t("pokemon.details") }}</h2>
         <p v-if="variety.description">{{ variety.description }}</p>
-        <div class="mb-4 row">
-          <PokemonSizeCategorySelect class="col" v-model="sizeCategory" />
-          <PokemonLevelInput class="col" v-model="level" />
+        <div class="row">
+          <PokemonSizeCategorySelect class="col-sm-6 mb-3" v-model="sizeCategory" />
+          <PokemonLevelInput class="col-sm-6 mb-3" v-model="level" />
         </div>
         <PokemonDetail :form="form" :level="level" :size-category="sizeCategory" :species="species" :variety="variety" />
         <h3 class="h5">{{ $t("pokemon.attributes.title") }}</h3>
         <PokemonAttributes :form="form" />
         <h3 class="h5">{{ $t("pokemon.capture.title") }}</h3>
         <PokemonCapture :form="form" :level="level" :size-category="sizeCategory" :species="species" />
+        <template v-if="variety.moves.length">
+          <h3 class="h5">{{ $t("pokemon.moves.title") }}</h3>
+          <PokemonMoves :moves="variety.moves" />
+        </template>
+        <h3 class="h5">{{ $t("pokemon.sprite.title") }}</h3>
+        <PokemonSprites :form="form" />
       </template>
     </template>
   </main>
@@ -49,7 +55,7 @@ const route = useRoute();
 const form = ref<Form | undefined>();
 const forms = ref<Form[]>([]);
 const level = ref<number>(1);
-const sizeCategory = ref<SizeCategory>("Medium");
+const sizeCategory = ref<SizeCategory>("Medium"); // TODO(fpion): Extra Small (XS) is selected initially
 const variety = ref<Variety | undefined>();
 
 const key = computed<string>(() => (Array.isArray(route.params.key) ? route.params.key[0] : route.params.key) ?? "");
@@ -118,11 +124,6 @@ watch(
   },
   { deep: true, immediate: true },
 );
-
-/* TODO(fpion):
- * moves
- * hasGenderDifferences & sprites
- */
 
 useSeo({ title });
 </script>

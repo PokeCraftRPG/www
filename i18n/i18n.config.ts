@@ -1,6 +1,11 @@
 export default defineI18nConfig(() => ({
   numberFormats: {
     en: {
+      accuracy: {
+        style: "percent",
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
+      },
       genderRatio: {
         style: "percent",
         minimumFractionDigits: 1,
