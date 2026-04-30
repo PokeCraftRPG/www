@@ -32,7 +32,7 @@
         </div>
         <PokemonDetail :form="form" :level="level" :size-category="sizeCategory" :species="species" :variety="variety" />
         <h3 class="h5">{{ $t("pokemon.attributes.title") }}</h3>
-        <PokemonAttributes :form="form" />
+        <PokemonAttributes :form="form" :level="level" :size-category="sizeCategory" />
         <h3 class="h5">{{ $t("pokemon.capture.title") }}</h3>
         <PokemonCapture :form="form" :level="level" :size-category="sizeCategory" :species="species" />
         <template v-if="variety.moves.length">

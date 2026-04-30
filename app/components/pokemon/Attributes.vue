@@ -22,33 +22,20 @@
 </template>
 
 <script setup lang="ts">
-import type { Form } from "~/types/pokemon";
+import type { Form, SizeCategory } from "~/types/pokemon";
 
 const props = defineProps<{
   form: Form;
+  level: number;
+  sizeCategory: SizeCategory;
 }>();
 
-const constitution = computed<number>(() => 0); // TODO(fpion): calculate max. HP / Constitution
-
-const attack = computed<number>(() => calculateScore(props.form.baseStatistics.attack));
-const defense = computed<number>(() => calculateScore(props.form.baseStatistics.defense));
-const specialAttack = computed<number>(() => calculateScore(props.form.baseStatistics.specialAttack));
-const specialDefense = computed<number>(() => calculateScore(props.form.baseStatistics.specialDefense));
-const speed = computed<number>(() => calculateScore(props.form.baseStatistics.speed));
-
-function calculateScore(baseStatistic: number): number {
-  if (baseStatistic < 45) {
-    return Math.floor(baseStatistic / 15) - 3;
-  } else if (baseStatistic < 105) {
-    return Math.floor((baseStatistic - 45) / 10);
-  } else if (baseStatistic < 125) {
-    return +6;
-  } else if (baseStatistic < 145) {
-    return +7;
-  } else {
-    return +8;
-  }
-}
+const attack = computed<number>(() => calculateAttribute(props.form.baseStatistics.attack));
+const constitution = computed<number>(() => calculateConstitution(props.form.baseStatistics.hp, props.sizeCategory, props.level));
+const defense = computed<number>(() => calculateAttribute(props.form.baseStatistics.defense));
+const specialAttack = computed<number>(() => calculateAttribute(props.form.baseStatistics.specialAttack));
+const specialDefense = computed<number>(() => calculateAttribute(props.form.baseStatistics.specialDefense));
+const speed = computed<number>(() => calculateAttribute(props.form.baseStatistics.speed));
 
 // TODO(fpion): change the labels for the real attributes
 </script>
