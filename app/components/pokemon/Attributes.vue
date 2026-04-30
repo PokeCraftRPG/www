@@ -1,21 +1,21 @@
 <template>
-  <div class="row">
-    <div class="col-6 col-sm-4 col-xl-2 mb-3 text-center">
+  <div class="row text-center">
+    <div class="col-6 col-sm-4 col-xl-2 mb-3">
       <TarCard class="d-flex flex-column h-100" :title="$t('pokemon.constitution')">{{ $n(constitution, "integer") }}</TarCard>
     </div>
-    <div class="col-6 col-sm-4 col-xl-2 mb-3 text-center">
+    <div class="col-6 col-sm-4 col-xl-2 mb-3">
       <TarCard class="d-flex flex-column h-100" :title="$t('pokemon.statistic.options.Attack')">{{ $n(attack, "integer") }}</TarCard>
     </div>
-    <div class="col-6 col-sm-4 col-xl-2 mb-3 text-center">
+    <div class="col-6 col-sm-4 col-xl-2 mb-3">
       <TarCard class="d-flex flex-column h-100" :title="$t('pokemon.statistic.options.Defense')">{{ $n(defense, "integer") }}</TarCard>
     </div>
-    <div class="col-6 col-sm-4 col-xl-2 mb-3 text-center">
+    <div class="col-6 col-sm-4 col-xl-2 mb-3">
       <TarCard class="d-flex flex-column h-100" :title="$t('pokemon.statistic.options.SpecialAttack')">{{ $n(specialAttack, "integer") }}</TarCard>
     </div>
-    <div class="col-6 col-sm-4 col-xl-2 mb-3 text-center">
+    <div class="col-6 col-sm-4 col-xl-2 mb-3">
       <TarCard class="d-flex flex-column h-100" :title="$t('pokemon.statistic.options.SpecialDefense')">{{ $n(specialDefense, "integer") }}</TarCard>
     </div>
-    <div class="col-6 col-sm-4 col-xl-2 mb-3 text-center">
+    <div class="col-6 col-sm-4 col-xl-2 mb-3">
       <TarCard class="d-flex flex-column h-100" :title="$t('pokemon.statistic.options.Speed')">{{ $n(speed, "integer") }}</TarCard>
     </div>
   </div>

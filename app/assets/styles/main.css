@@ -37,6 +37,10 @@ button:disabled {
   width: 15% !important;
 }
 
-.w-fifth {
-  width: 20% !important;
+.w-35 {
+  width: 35% !important;
+}
+
+.w-65 {
+  width: 65% !important;
 }

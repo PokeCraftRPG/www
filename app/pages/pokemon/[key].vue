@@ -30,11 +30,11 @@
           <PokemonSizeCategorySelect class="col-sm-6 mb-3" v-model="sizeCategory" />
           <PokemonLevelInput class="col-sm-6 mb-3" v-model="level" />
         </div>
-        <PokemonDetail :form="form" :level="level" :size-category="sizeCategory" :species="species" :variety="variety" />
+        <PokemonDetail :form="form" :level="level" :size-category="sizeCategorySafe" :species="species" :variety="variety" />
         <h3 class="h5">{{ $t("pokemon.attributes.title") }}</h3>
-        <PokemonAttributes :form="form" :level="level" :size-category="sizeCategory" />
+        <PokemonAttributes :form="form" :level="level" :size-category="sizeCategorySafe" />
         <h3 class="h5">{{ $t("pokemon.capture.title") }}</h3>
-        <PokemonCapture :form="form" :level="level" :size-category="sizeCategory" :species="species" />
+        <PokemonCapture :form="form" :level="level" :size-category="sizeCategorySafe" :species="species" />
         <template v-if="variety.moves.length">
           <h3 class="h5">{{ $t("pokemon.moves.title") }}</h3>
           <PokemonMoves :moves="variety.moves" />
@@ -55,7 +55,7 @@ const route = useRoute();
 const form = ref<Form | undefined>();
 const forms = ref<Form[]>([]);
 const level = ref<number>(1);
-const sizeCategory = ref<SizeCategory>("Medium"); // TODO(fpion): Extra Small (XS) is selected initially
+const sizeCategory = ref<SizeCategory>();
 const variety = ref<Variety | undefined>();
 
 const key = computed<string>(() => (Array.isArray(route.params.key) ? route.params.key[0] : route.params.key) ?? "");
@@ -97,6 +97,8 @@ const varietyClasses = computed<string[]>(() => {
   return classes;
 });
 
+const sizeCategorySafe = computed<SizeCategory>(() => sizeCategory.value ?? "Medium");
+
 function selectForm(selected: Form): void {
   if (form.value?.id !== selected.id) {
     form.value = selected;
@@ -122,8 +124,10 @@ watch(
       variety.value = undefined;
     }
   },
-  { deep: true, immediate: true },
+  { immediate: true },
 );
+
+onMounted(() => (sizeCategory.value = "Medium"));
 
 useSeo({ title });
 </script>

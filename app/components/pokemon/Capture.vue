@@ -4,11 +4,11 @@
       <PokemonVitalityInput class="col-sm-6 mb-3" id="current-vitality" label="pokemon.vitality.current" :max="maximumVitality" v-model="currentVitality" />
       <PokemonVitalityInput class="col-sm-6 mb-3" id="maximum-vitality" label="pokemon.vitality.maximum" v-model="maximumVitality" />
     </div>
-    <div class="row">
-      <div class="col-sm-6 mb-3 text-center">
+    <div class="row text-center">
+      <div class="col-sm-6 mb-3">
         <TarCard class="d-flex flex-column h-100" :title="$t('pokemon.capture.difficulty')">{{ $n(difficulty, "integer") }}</TarCard>
       </div>
-      <div class="col-sm-6 mb-3 text-center">
+      <div class="col-sm-6 mb-3">
         <TarCard class="d-flex flex-column h-100" :title="$t('pokemon.capture.baseFriendship')">{{ $n(species.baseFriendship * 0.4, "integer") }}</TarCard>
       </div>
     </div>
