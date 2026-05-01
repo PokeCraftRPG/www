@@ -1,8 +1,12 @@
 {
+  "actions": {
+    "close": "Close"
+  },
   "brand": "PokéCraft",
   "loading": "Loading…",
   "pokemon": {
     "abilities": {
+      "format": "Ability: {ability}",
       "title": "Abilities"
     },
     "attributes": {
@@ -90,6 +94,7 @@
           "Status": "Status"
         }
       },
+      "format": "Move: {move}",
       "label": "Move",
       "learningMethod": {
         "options": {

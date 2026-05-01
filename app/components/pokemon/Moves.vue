@@ -17,7 +17,7 @@
           <tr v-for="item in sortedMoves" :key="item.move.id">
             <td>{{ item.level ? $n(item.level, "integer") : item.learningMethod }}</td>
             <td>
-              <a href="#">{{ item.move.name ?? item.move.key }}</a>
+              <a href="#" @click.prevent="selectMove(item.move)">{{ item.move.name ?? item.move.key }}</a>
             </td>
             <td>
               <PokemonTypeBadge :type="item.move.type" />
@@ -55,7 +55,7 @@
           <tr v-for="item in sortedMoves" :key="item.move.id">
             <td>{{ item.level ? $n(item.level, "integer") : item.learningMethod }}</td>
             <td>
-              <a href="#">{{ item.move.name ?? item.move.key }}</a>
+              <a href="#" @click.prevent="selectMove(item.move)">{{ item.move.name ?? item.move.key }}</a>
             </td>
             <td>
               <PokemonTypeBadge :type="item.move.type" />
@@ -79,25 +79,29 @@
           <tr v-for="item in sortedMoves" :key="item.move.id">
             <td>{{ item.level ? $n(item.level, "integer") : item.learningMethod }}</td>
             <td>
-              <a href="#">{{ item.move.name ?? item.move.key }}</a>
+              <a href="#" @click.prevent="selectMove(item.move)">{{ item.move.name ?? item.move.key }}</a>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
+    <MoveDetailModal v-if="move" :move="move" ref="moveModal" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { arrayUtils } from "logitar-js";
 
-import type { VarietyMove } from "~/types/pokemon";
+import type { Move, VarietyMove } from "~/types/pokemon";
 
 const { orderBy } = arrayUtils;
 
 const props = defineProps<{
   moves: VarietyMove[];
 }>();
+
+const move = ref<Move>();
+const moveModal = ref();
 
 type SortedVarietyMove = VarietyMove & {
   learningMethod: string;
@@ -116,4 +120,9 @@ const sortedMoves = computed<SortedVarietyMove[]>(() =>
     "sort",
   ),
 );
+
+function selectMove(selectedMove: Move): void {
+  move.value = selectedMove;
+  setTimeout(() => moveModal.value?.open(), 1);
+}
 </script>

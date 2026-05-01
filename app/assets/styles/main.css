@@ -44,3 +44,7 @@ button:disabled {
 .w-65 {
   width: 65% !important;
 }
+
+.w-third {
+  width: 33.333333% !important;
+}
