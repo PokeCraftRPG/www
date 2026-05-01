@@ -17,6 +17,7 @@ import {
   faQuestion,
   faSun,
   faVenus,
+  faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 
 config.autoAddCss = false;
@@ -38,6 +39,7 @@ library.add(
   faQuestion,
   faSun,
   faVenus,
+  faXmark,
 );
 
 export default defineNuxtPlugin((nuxtApp) => {

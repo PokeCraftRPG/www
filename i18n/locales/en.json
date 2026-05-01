@@ -1,8 +1,12 @@
 {
+  "actions": {
+    "close": "Close"
+  },
   "brand": "PokéCraft",
   "loading": "Loading…",
   "pokemon": {
     "abilities": {
+      "format": "Ability: {ability}",
       "title": "Abilities"
     },
     "attributes": {
@@ -45,6 +49,7 @@
         "Standard": "Standard"
       }
     },
+    "constitution": "Constitution",
     "details": "Details",
     "experience": {
       "candies": "candy | candy | candies",
@@ -78,6 +83,31 @@
     "level": {
       "label": "Level"
     },
+    "moves": {
+      "accuracy": "Accuracy",
+      "category": {
+        "alt": "{category} Category Badge",
+        "label": "Category",
+        "options": {
+          "Physical": "Physical",
+          "Special": "Special",
+          "Status": "Status"
+        }
+      },
+      "format": "Move: {move}",
+      "label": "Move",
+      "learningMethod": {
+        "options": {
+          "Evolution": "Evolution",
+          "Level": "Level",
+          "Reminder": "Reminder"
+        }
+      },
+      "power": "Power",
+      "powerPoints": "PP",
+      "title": "Moves"
+    },
+    "shiny": "Shiny",
     "size": {
       "category": {
         "label": "Size Category",
@@ -93,10 +123,22 @@
       "label": "Size"
     },
     "sprite": {
-      "alt": "{name}’s Sprite"
+      "alt": "{name}’s Sprite",
+      "title": "Sprites"
+    },
+    "statistic": {
+      "options": {
+        "HP": "HP",
+        "Attack": "Attack",
+        "Defense": "Defense",
+        "SpecialAttack": "Special Attack",
+        "SpecialDefense": "Special Defense",
+        "Speed": "Speed"
+      }
     },
     "type": {
-      "alt": "{type} Type Badge"
+      "alt": "{type} Type Badge",
+      "label": "Type"
     },
     "varieties": {
       "canChangeForm": "Metamorph",

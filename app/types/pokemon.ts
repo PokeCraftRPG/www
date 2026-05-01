@@ -82,6 +82,8 @@ export type Move = Aggregate & {
 
 export type MoveCategory = "Physical" | "Special" | "Status";
 
+export type PokemonGender = "Female" | "Male";
+
 export type PokemonType =
   | "Bug"
   | "Dark"
