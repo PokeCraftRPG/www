@@ -9,7 +9,10 @@
         <ModalBody>
           <p v-if="ability.description">{{ ability.description }}</p>
         </ModalBody>
-        <ModalFooter>
+        <ModalFooter class="d-flex justify-content-between">
+          <div>
+            <NuxtLink :to="`/abilities/${ability.key}`">{{ $t("pokemon.abilities.details") }}</NuxtLink>
+          </div>
           <TarButton icon="fas fa-xmark" :text="$t('actions.close')" variant="secondary" @click="close()" />
         </ModalFooter>
       </ModalContent>
