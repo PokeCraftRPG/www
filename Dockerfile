@@ -13,6 +13,8 @@ RUN npm clean-install
 # Copy the entire project
 COPY . ./
 
+RUN ls ./app/types/tar
+
 # Build the project
 RUN npm run build
 
