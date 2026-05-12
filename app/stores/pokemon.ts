@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 
-import type { Form, SizeCategory, Variety } from "~/types/pokemon";
+import type { Form, SizeCategory, Species, Variety } from "~/types/pokemon";
 
 function clamp(value: number, min: number, max: number): number {
   if (value < min) {
@@ -20,8 +20,14 @@ export const usePokemonStore = defineStore("pokemon", () => {
   const isConstitutionHyperTrained = ref<boolean>(false);
   const level = ref<number>(1);
   const sizeCategory = ref<SizeCategory>("Medium");
+  const species = ref<Species>();
   const variety = ref<Variety>();
   const vitality = ref<number>(0);
+
+  // getters
+  const captureDifficulty = computed<number>(() =>
+    species.value ? calculateCaptureDifficulty(species.value.catchRate, level.value, vitality.value, constitutionTotal.value) : 0,
+  );
 
   // mutations
   function updateVitality(): void {
@@ -67,6 +73,10 @@ export const usePokemonStore = defineStore("pokemon", () => {
     updateVitality();
   }
 
+  function setSpecies(value: Species | null | undefined): void {
+    species.value = value ?? undefined;
+  }
+
   function setVariety(value: Variety | null | undefined): void {
     variety.value = value ?? undefined;
   }
@@ -76,6 +86,7 @@ export const usePokemonStore = defineStore("pokemon", () => {
   }
 
   return {
+    // state
     constitutionBase,
     constitutionBonus,
     constitutionTotal,
@@ -83,13 +94,18 @@ export const usePokemonStore = defineStore("pokemon", () => {
     isConstitutionHyperTrained,
     level,
     sizeCategory,
+    species,
     variety,
     vitality,
+    // getters
+    captureDifficulty,
+    // actions
     setConstitutionBonus,
     setConstitutionHyperTrained,
     setForm,
     setLevel,
     setSizeCategory,
+    setSpecies,
     setVariety,
     setVitality,
   };

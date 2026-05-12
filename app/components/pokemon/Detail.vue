@@ -1,5 +1,5 @@
 <template>
-  <div v-if="form">
+  <div v-if="form && species">
     <div class="d-none d-md-block">
       <table class="table table-striped text-center">
         <tbody>
@@ -158,14 +158,11 @@ import type { Ability, Form, Species, Variety } from "~/types/pokemon";
 
 const pokemon = usePokemonStore();
 
-const props = defineProps<{
-  species: Species;
-}>();
-
 const ability = ref<Ability>();
 const abilityModal = ref();
 
 const form = computed<Form | undefined>(() => pokemon.form);
+const species = computed<Species | undefined>(() => pokemon.species);
 const variety = computed<Variety | undefined>(() => pokemon.variety);
 
 const abilities = computed<number>(() => {
@@ -185,7 +182,7 @@ const abilities = computed<number>(() => {
 });
 
 const growthRate = computed<string>(() => {
-  switch (props.species.growthRate) {
+  switch (species.value?.growthRate) {
     case "Fluctuating":
     case "Slow":
       return $t("pokemon.growthRate.options.Slow");

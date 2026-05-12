@@ -30,13 +30,13 @@
           <PokemonSizeCategorySelect class="col-sm-6 mb-3" :model-value="pokemon.sizeCategory" @update:model-value="pokemon.setSizeCategory" />
           <PokemonLevelInput class="col-sm-6 mb-3" :model-value="pokemon.level" @update:model-value="pokemon.setLevel" />
         </div>
-        <PokemonDetail :species="species" />
+        <PokemonDetail />
         <h3 class="h5">{{ $t("pokemon.attribute.title") }}</h3>
         <PokemonAttributes />
         <h3 class="h5">{{ $t("pokemon.constitution.label") }}</h3>
         <PokemonConstitution />
         <h3 class="h5">{{ $t("pokemon.capture.title") }}</h3>
-        <PokemonCapture :species="species" />
+        <PokemonCapture />
         <template v-if="variety.moves.length">
           <h3 class="h5">{{ $t("pokemon.moves.title") }}</h3>
           <PokemonMoves />
@@ -55,7 +55,7 @@ const config = useRuntimeConfig();
 const pokemon = usePokemonStore();
 const route = useRoute();
 
-const forms = ref<Form[]>([]);
+const forms = ref<Form[]>([]); // TODO(fpion): refactor this
 
 const key = computed<string>(() => (Array.isArray(route.params.key) ? route.params.key[0] : route.params.key) ?? "");
 const { data } = await useAsyncData(
@@ -70,10 +70,10 @@ const { data } = await useAsyncData(
   {
     watch: [key],
   },
-);
-const species = computed<Species | undefined>(() => data.value?.species);
+); // TODO(fpion): refactor this
+const species = computed<Species | undefined>(() => pokemon.species);
 const title = computed<string>(() => (species.value ? (species.value.name ?? species.value.key) : ""));
-const varieties = computed<Variety[]>(() => data.value?.varieties ?? []);
+const varieties = computed<Variety[]>(() => data.value?.varieties ?? []); // TODO(fpion): refactor this
 const variety = computed<Variety | undefined>(() => pokemon.variety);
 const form = computed<Form | undefined>(() => pokemon.form);
 
@@ -104,11 +104,12 @@ function selectVariety(selected: Variety): void {
     forms.value = sortForms(selected.forms);
     pokemon.setForm(forms.value[0]);
   }
-}
+} // TODO(fpion): refactor this
 
 watch(
   data,
   (data) => {
+    pokemon.setSpecies(data?.species);
     const defaultVariety: Variety | undefined = data?.varieties[0];
     if (defaultVariety) {
       selectVariety(defaultVariety);
@@ -119,7 +120,7 @@ watch(
     }
   },
   { immediate: true },
-);
+); // TODO(fpion): refactor this
 
 useSeo({ title });
 </script>
