@@ -6,6 +6,7 @@
   "loading": "Loading…",
   "pokemon": {
     "abilities": {
+      "details": "View full details",
       "format": "Ability: {ability}",
       "title": "Abilities"
     },
@@ -94,6 +95,7 @@
           "Status": "Status"
         }
       },
+      "details": "View full details",
       "format": "Move: {move}",
       "label": "Move",
       "learningMethod": {
@@ -104,7 +106,7 @@
         }
       },
       "power": "Power",
-      "powerPoints": "PP",
+      "stamina": "Stamina",
       "title": "Moves"
     },
     "shiny": "Shiny",
@@ -128,12 +130,11 @@
     },
     "statistic": {
       "options": {
-        "HP": "HP",
-        "Attack": "Attack",
-        "Defense": "Defense",
-        "SpecialAttack": "Special Attack",
-        "SpecialDefense": "Special Defense",
-        "Speed": "Speed"
+        "Aura": "Aura",
+        "Brawn": "Brawn",
+        "Swift": "Swift",
+        "Tough": "Tough",
+        "Will": "Will"
       }
     },
     "type": {

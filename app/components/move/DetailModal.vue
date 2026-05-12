@@ -29,19 +29,22 @@
             <div class="col">
               <strong>{{ $t("pokemon.moves.power") }}</strong>
               <br />
-              <template v-if="move.power">{{ $n(move.power, "integer") }}</template>
+              <template v-if="powerRoll">{{ powerRoll }}</template>
               <span v-else class="text-muted">{{ "—" }}</span>
             </div>
             <div class="col">
-              <strong>{{ $t("pokemon.moves.powerPoints") }}</strong>
+              <strong>{{ $t("pokemon.moves.stamina") }}</strong>
               <br />
-              <template v-if="move.powerPoints">{{ $n(move.powerPoints, "integer") }}</template>
+              <template v-if="stamina">{{ $n(stamina, "integer") }}</template>
               <span v-else class="text-muted">{{ "—" }}</span>
             </div>
           </div>
           <p v-if="move.description">{{ move.description }}</p>
         </ModalBody>
-        <ModalFooter>
+        <ModalFooter class="d-flex justify-content-between">
+          <div>
+            <NuxtLink :to="`/moves/${move.key}`">{{ $t("pokemon.moves.details") }}</NuxtLink>
+          </div>
           <TarButton icon="fas fa-xmark" :text="$t('actions.close')" variant="secondary" @click="close()" />
         </ModalFooter>
       </ModalContent>
@@ -52,9 +55,12 @@
 <script setup lang="ts">
 import type { Move } from "~/types/pokemon";
 
-defineProps<{
+const props = defineProps<{
   move: Move;
 }>();
+
+const powerRoll = computed<string>(() => convertPowerToRoll(props.move.power ?? 0));
+const stamina = computed<number>(() => convertPowerPointsToStamina(props.move.powerPoints));
 
 const modalRef = ref();
 

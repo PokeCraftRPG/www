@@ -4,19 +4,19 @@
       <TarCard class="d-flex flex-column h-100" :title="$t('pokemon.constitution')">{{ $n(constitution, "integer") }}</TarCard>
     </div>
     <div class="col-6 col-sm-4 col-xl-2 mb-3">
-      <TarCard class="d-flex flex-column h-100" :title="$t('pokemon.statistic.options.Attack')">{{ $n(attack, "integer") }}</TarCard>
+      <TarCard class="d-flex flex-column h-100" :title="$t('pokemon.statistic.options.Aura')">{{ $n(aura, "integer") }}</TarCard>
     </div>
     <div class="col-6 col-sm-4 col-xl-2 mb-3">
-      <TarCard class="d-flex flex-column h-100" :title="$t('pokemon.statistic.options.Defense')">{{ $n(defense, "integer") }}</TarCard>
+      <TarCard class="d-flex flex-column h-100" :title="$t('pokemon.statistic.options.Swift')">{{ $n(swift, "integer") }}</TarCard>
     </div>
     <div class="col-6 col-sm-4 col-xl-2 mb-3">
-      <TarCard class="d-flex flex-column h-100" :title="$t('pokemon.statistic.options.SpecialAttack')">{{ $n(specialAttack, "integer") }}</TarCard>
+      <TarCard class="d-flex flex-column h-100" :title="$t('pokemon.statistic.options.Brawn')">{{ $n(brawn, "integer") }}</TarCard>
     </div>
     <div class="col-6 col-sm-4 col-xl-2 mb-3">
-      <TarCard class="d-flex flex-column h-100" :title="$t('pokemon.statistic.options.SpecialDefense')">{{ $n(specialDefense, "integer") }}</TarCard>
+      <TarCard class="d-flex flex-column h-100" :title="$t('pokemon.statistic.options.Tough')">{{ $n(tough, "integer") }}</TarCard>
     </div>
     <div class="col-6 col-sm-4 col-xl-2 mb-3">
-      <TarCard class="d-flex flex-column h-100" :title="$t('pokemon.statistic.options.Speed')">{{ $n(speed, "integer") }}</TarCard>
+      <TarCard class="d-flex flex-column h-100" :title="$t('pokemon.statistic.options.Will')">{{ $n(will, "integer") }}</TarCard>
     </div>
   </div>
 </template>
@@ -30,12 +30,10 @@ const props = defineProps<{
   sizeCategory: SizeCategory;
 }>();
 
-const attack = computed<number>(() => calculateAttribute(props.form.baseStatistics.attack));
+const aura = computed<number>(() => calculateAttribute(props.form.baseStatistics.specialAttack));
+const brawn = computed<number>(() => calculateAttribute(props.form.baseStatistics.attack));
 const constitution = computed<number>(() => calculateConstitution(props.form.baseStatistics.hp, props.sizeCategory, props.level));
-const defense = computed<number>(() => calculateAttribute(props.form.baseStatistics.defense));
-const specialAttack = computed<number>(() => calculateAttribute(props.form.baseStatistics.specialAttack));
-const specialDefense = computed<number>(() => calculateAttribute(props.form.baseStatistics.specialDefense));
-const speed = computed<number>(() => calculateAttribute(props.form.baseStatistics.speed));
-
-// TODO(fpion): change the labels for the real attributes
+const swift = computed<number>(() => calculateAttribute(props.form.baseStatistics.speed));
+const tough = computed<number>(() => calculateAttribute(props.form.baseStatistics.defense));
+const will = computed<number>(() => calculateAttribute(props.form.baseStatistics.specialDefense));
 </script>

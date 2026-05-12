@@ -10,11 +10,11 @@
             <th scope="col" class="w-15">{{ $t("pokemon.moves.category.label") }}</th>
             <th scope="col" class="w-10">{{ $t("pokemon.moves.accuracy") }}</th>
             <th scope="col" class="w-10">{{ $t("pokemon.moves.power") }}</th>
-            <th scope="col" class="w-10">{{ $t("pokemon.moves.powerPoints") }}</th>
+            <th scope="col" class="w-10">{{ $t("pokemon.moves.stamina") }}</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="item in sortedMoves" :key="item.move.id">
+          <tr v-for="item in computedMoves" :key="item.move.id">
             <td>{{ item.level ? $n(item.level, "integer") : item.learningMethod }}</td>
             <td>
               <a href="#" @click.prevent="selectMove(item.move)">{{ item.move.name ?? item.move.key }}</a>
@@ -30,11 +30,11 @@
               <span v-else class="text-muted">{{ "—" }}</span>
             </td>
             <td>
-              <template v-if="item.move.power">{{ $n(item.move.power, "integer") }}</template>
+              <template v-if="item.powerRoll">{{ item.powerRoll }}</template>
               <span v-else class="text-muted">{{ "—" }}</span>
             </td>
             <td>
-              <template v-if="item.move.powerPoints">{{ $n(item.move.powerPoints, "integer") }}</template>
+              <template v-if="item.stamina">{{ $n(item.stamina, "integer") }}</template>
               <span v-else class="text-muted">{{ "—" }}</span>
             </td>
           </tr>
@@ -52,7 +52,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="item in sortedMoves" :key="item.move.id">
+          <tr v-for="item in computedMoves" :key="item.move.id">
             <td>{{ item.level ? $n(item.level, "integer") : item.learningMethod }}</td>
             <td>
               <a href="#" @click.prevent="selectMove(item.move)">{{ item.move.name ?? item.move.key }}</a>
@@ -76,7 +76,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="item in sortedMoves" :key="item.move.id">
+          <tr v-for="item in computedMoves" :key="item.move.id">
             <td>{{ item.level ? $n(item.level, "integer") : item.learningMethod }}</td>
             <td>
               <a href="#" @click.prevent="selectMove(item.move)">{{ item.move.name ?? item.move.key }}</a>
@@ -103,11 +103,13 @@ const props = defineProps<{
 const move = ref<Move>();
 const moveModal = ref();
 
-type SortedVarietyMove = VarietyMove & {
+type ComputedMove = VarietyMove & {
   learningMethod: string;
   sort: string;
+  powerRoll: string;
+  stamina: number;
 };
-const sortedMoves = computed<SortedVarietyMove[]>(() =>
+const computedMoves = computed<ComputedMove[]>(() =>
   orderBy(
     props.moves.map((item) => {
       const learningMethod: string = $t(`pokemon.moves.learningMethod.options.${item.method}`);
@@ -115,6 +117,8 @@ const sortedMoves = computed<SortedVarietyMove[]>(() =>
         ...item,
         learningMethod,
         sort: [(item.level ?? 0).toString().padStart(3, "0"), learningMethod].join("_"),
+        powerRoll: convertPowerToRoll(item.move.power ?? 0),
+        stamina: convertPowerPointsToStamina(item.move.powerPoints),
       };
     }),
     "sort",
