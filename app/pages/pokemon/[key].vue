@@ -28,15 +28,15 @@
         <p v-if="variety.description">{{ variety.description }}</p>
         <div class="row">
           <PokemonSizeCategorySelect class="col-sm-6 mb-3" v-model="sizeCategory" />
-          <PokemonLevelInput class="col-sm-6 mb-3" v-model="level" />
+          <PokemonLevelInput class="col-sm-6 mb-3" :model-value="pokemon.level" @update:model-value="pokemon.setLevel" />
         </div>
-        <PokemonDetail :form="form" :level="level" :size-category="sizeCategorySafe" :species="species" :variety="variety" />
+        <PokemonDetail :form="form" :size-category="sizeCategorySafe" :species="species" :variety="variety" />
         <h3 class="h5">{{ $t("pokemon.attribute.title") }}</h3>
-        <PokemonAttributes :form="form" :level="level" :size-category="sizeCategorySafe" />
+        <PokemonAttributes :form="form" :size-category="sizeCategorySafe" />
         <h3 class="h5">{{ $t("pokemon.constitution.label") }}</h3>
-        <PokemonConstitution :form="form" :level="level" :size-category="sizeCategorySafe" @update:vitality="vitality = $event" />
+        <PokemonConstitution :form="form" :size-category="sizeCategorySafe" @update:vitality="vitality = $event" />
         <h3 class="h5">{{ $t("pokemon.capture.title") }}</h3>
-        <PokemonCapture :form="form" :level="level" :size-category="sizeCategorySafe" :species="species" :vitality="vitality" />
+        <PokemonCapture :form="form" :size-category="sizeCategorySafe" :species="species" :vitality="vitality" />
         <template v-if="variety.moves.length">
           <h3 class="h5">{{ $t("pokemon.moves.title") }}</h3>
           <PokemonMoves :moves="variety.moves" />
@@ -50,13 +50,14 @@
 
 <script setup lang="ts">
 import type { Form, SizeCategory, Species, Variety } from "~/types/pokemon";
+import { usePokemonStore } from "~/stores/pokemon";
 
 const config = useRuntimeConfig();
+const pokemon = usePokemonStore();
 const route = useRoute();
 
 const form = ref<Form | undefined>();
 const forms = ref<Form[]>([]);
-const level = ref<number>(1);
 const sizeCategory = ref<SizeCategory>();
 const variety = ref<Variety | undefined>();
 const vitality = ref<number>(0);

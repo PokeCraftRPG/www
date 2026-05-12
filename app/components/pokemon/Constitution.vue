@@ -22,10 +22,12 @@
 
 <script setup lang="ts">
 import type { Form, SizeCategory } from "~/types/pokemon";
+import { usePokemonStore } from "~/stores/pokemon";
+
+const pokemon = usePokemonStore();
 
 const props = defineProps<{
   form: Form;
-  level: number;
   sizeCategory: SizeCategory;
 }>();
 
@@ -38,7 +40,7 @@ const hyperTraining = ref<boolean>(false);
 
 const base = computed<number>(() => calculateConstitutionBase(props.form.baseStatistics.hp));
 const total = computed<number>(
-  () => calculateConstitutionTotal(base.value, hyperTraining.value ? "ExtraLarge" : props.sizeCategory, props.level) + bonus.value,
+  () => calculateConstitutionTotal(base.value, hyperTraining.value ? "ExtraLarge" : props.sizeCategory, pokemon.level) + bonus.value,
 );
 
 watch(total, (total) => emit("update:vitality", total), { immediate: true });

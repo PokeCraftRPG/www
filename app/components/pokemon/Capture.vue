@@ -18,10 +18,12 @@
 
 <script setup lang="ts">
 import type { Form, SizeCategory, Species } from "~/types/pokemon";
+import { usePokemonStore } from "~/stores/pokemon";
+
+const pokemon = usePokemonStore();
 
 const props = defineProps<{
   form: Form;
-  level: number;
   sizeCategory: SizeCategory;
   species: Species;
   vitality: number;
@@ -29,7 +31,7 @@ const props = defineProps<{
 
 const currentVitality = ref<number>(0);
 
-const difficulty = computed<number>(() => calculateCaptureDifficulty(props.species.catchRate, props.level, currentVitality.value, props.vitality));
+const difficulty = computed<number>(() => calculateCaptureDifficulty(props.species.catchRate, pokemon.level, currentVitality.value, props.vitality));
 
 watch(
   () => props.vitality,

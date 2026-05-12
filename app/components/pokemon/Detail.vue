@@ -155,10 +155,12 @@
 
 <script setup lang="ts">
 import type { Ability, Form, SizeCategory, Species, Variety } from "~/types/pokemon";
+import { usePokemonStore } from "~/stores/pokemon";
+
+const pokemon = usePokemonStore();
 
 const props = defineProps<{
   form: Form;
-  level: number;
   sizeCategory: SizeCategory;
   species: Species;
   variety: Variety;
@@ -192,22 +194,19 @@ const growthRate = computed<string>(() => {
   }
   return $t("pokemon.growthRate.options.Medium");
 });
-const candyCount = computed<number>(() => (props.level > 0 && props.level <= 100 ? 1 : 0));
+const candyCount = computed<number>(() => 1);
 const candySize = computed<string>(() => {
-  if (props.level > 0 && props.level <= 100) {
-    if (props.level < 5) {
-      return "XS";
-    } else if (props.level < 20) {
-      return "S";
-    } else if (props.level < 50) {
-      return "M";
-    } else if (props.level < 75) {
-      return "L";
-    } else {
-      return "XL";
-    }
+  if (pokemon.level < 5) {
+    return "XS";
+  } else if (pokemon.level < 20) {
+    return "S";
+  } else if (pokemon.level < 50) {
+    return "M";
+  } else if (pokemon.level < 75) {
+    return "L";
+  } else {
+    return "XL";
   }
-  return "";
 });
 
 const isGenderUnknown = computed<boolean>(() => typeof props.variety.genderRatio !== "number");

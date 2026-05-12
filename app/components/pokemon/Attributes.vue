@@ -23,7 +23,6 @@ import type { Form, SizeCategory } from "~/types/pokemon";
 
 const props = defineProps<{
   form: Form;
-  level: number;
   sizeCategory: SizeCategory;
 }>();
 
