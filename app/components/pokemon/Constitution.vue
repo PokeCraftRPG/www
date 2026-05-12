@@ -1,9 +1,14 @@
 <template>
   <div>
     <div class="row">
-      <PokemonBonusInput class="col-sm-6 mb-3" v-model="bonus" />
+      <PokemonBonusInput class="col-sm-6 mb-3" :model-value="pokemon.constitutionBonus" @update:model-value="pokemon.setConstitutionBonus" />
       <div class="col-sm-6 mb-3">
-        <TarCheckbox :label="$t('pokemon.hyperTraining')" switch v-model="hyperTraining" />
+        <TarCheckbox
+          :label="$t('pokemon.hyperTraining')"
+          :model-value="pokemon.isConstitutionHyperTrained"
+          switch
+          @update:model-value="pokemon.setConstitutionHyperTrained"
+        />
       </div>
     </div>
     <div class="row text-center">
@@ -34,12 +39,10 @@ const emit = defineEmits<{
   (e: "update:vitality", value: number): void;
 }>();
 
-const bonus = ref<number>(0);
-const hyperTraining = ref<boolean>(false);
-
 const base = computed<number>(() => calculateConstitutionBase(props.form.baseStatistics.hp));
 const total = computed<number>(
-  () => calculateConstitutionTotal(base.value, hyperTraining.value ? "ExtraLarge" : pokemon.sizeCategory, pokemon.level) + bonus.value,
+  () =>
+    calculateConstitutionTotal(base.value, pokemon.isConstitutionHyperTrained ? "ExtraLarge" : pokemon.sizeCategory, pokemon.level) + pokemon.constitutionBonus,
 );
 
 watch(total, (total) => emit("update:vitality", total), { immediate: true });
