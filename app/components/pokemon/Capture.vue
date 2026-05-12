@@ -1,8 +1,8 @@
 <template>
   <div>
-    <PokemonVitalityInput class="mb-3" id="current-vitality" :max="vitality" v-model="currentVitality">
+    <PokemonVitalityInput class="mb-3" :max="pokemon.constitutionTotal" :model-value="pokemon.vitality" @update:model-value="pokemon.setVitality">
       <template #append>
-        <span class="input-group-text">/ {{ vitality }}</span>
+        <span class="input-group-text">/ {{ pokemon.vitality }}</span>
       </template>
     </PokemonVitalityInput>
     <div class="row text-center">
@@ -23,16 +23,13 @@ const pokemon = usePokemonStore();
 
 const props = defineProps<{
   species: Species;
-  vitality: number;
 }>();
 
-const currentVitality = ref<number>(0);
-
-const difficulty = computed<number>(() => calculateCaptureDifficulty(props.species.catchRate, pokemon.level, currentVitality.value, props.vitality));
+const difficulty = computed<number>(() => calculateCaptureDifficulty(props.species.catchRate, pokemon.level, pokemon.vitality, pokemon.constitutionTotal)); // TODO(fpion): refactor
 
 watch(
-  () => props.vitality,
-  (maximumVitality) => (currentVitality.value = maximumVitality),
+  () => pokemon.constitutionTotal,
+  (vitality) => pokemon.setVitality(vitality),
   { immediate: true },
-);
+); // TODO(fpion): this should be done in the store!
 </script>

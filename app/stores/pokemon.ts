@@ -18,15 +18,15 @@ export const usePokemonStore = defineStore("pokemon", () => {
   const isConstitutionHyperTrained = ref<boolean>(false);
   const level = ref<number>(1);
   const sizeCategory = ref<SizeCategory>("Medium");
+  const vitality = ref<number>(0);
 
   // getters
   const constitutionBase = computed<number>(() => (form.value ? calculateConstitutionBase(form.value.baseStatistics.hp) : 0));
-  const constitutionTotal = computed<number>(() =>
-    form.value
-      ? calculateConstitutionTotal(constitutionBase.value, isConstitutionHyperTrained.value ? "ExtraLarge" : sizeCategory.value, level.value) +
-        constitutionBonus.value
-      : 0,
-  );
+  const constitutionTotal = computed<number>(
+    () =>
+      calculateConstitutionTotal(constitutionBase.value, isConstitutionHyperTrained.value ? "ExtraLarge" : sizeCategory.value, level.value) +
+      constitutionBonus.value,
+  ); // TODO(fpion): changes when form, isConstitutionHyperTrained/sizeCategory or level changes
 
   // actions
   function setConstitutionBonus(value: number | null | undefined): void {
@@ -58,6 +58,10 @@ export const usePokemonStore = defineStore("pokemon", () => {
     }
   }
 
+  function setVitality(value: number | null | undefined): void {
+    vitality.value = clamp(value ?? 0, 0, constitutionTotal.value);
+  }
+
   return {
     // state
     constitutionBonus,
@@ -65,6 +69,7 @@ export const usePokemonStore = defineStore("pokemon", () => {
     isConstitutionHyperTrained,
     level,
     sizeCategory,
+    vitality,
     // getters
     constitutionBase,
     constitutionTotal,
@@ -74,5 +79,6 @@ export const usePokemonStore = defineStore("pokemon", () => {
     setForm,
     setLevel,
     setSizeCategory,
+    setVitality,
   };
 });

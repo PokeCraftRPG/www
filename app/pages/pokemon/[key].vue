@@ -36,7 +36,7 @@
         <h3 class="h5">{{ $t("pokemon.constitution.label") }}</h3>
         <PokemonConstitution />
         <h3 class="h5">{{ $t("pokemon.capture.title") }}</h3>
-        <PokemonCapture :species="species" :vitality="vitality" />
+        <PokemonCapture :species="species" />
         <template v-if="variety.moves.length">
           <h3 class="h5">{{ $t("pokemon.moves.title") }}</h3>
           <PokemonMoves :moves="variety.moves" />
@@ -57,7 +57,6 @@ const route = useRoute();
 
 const forms = ref<Form[]>([]);
 const variety = ref<Variety | undefined>();
-const vitality = ref<number>(0);
 
 const key = computed<string>(() => (Array.isArray(route.params.key) ? route.params.key[0] : route.params.key) ?? "");
 const { data } = await useAsyncData(
