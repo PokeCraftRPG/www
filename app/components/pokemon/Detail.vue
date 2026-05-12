@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="form">
     <div class="d-none d-md-block">
       <table class="table table-striped text-center">
         <tbody>
@@ -155,12 +155,10 @@
 
 <script setup lang="ts">
 import type { Ability, Form, Species, Variety } from "~/types/pokemon";
-import { usePokemonStore } from "~/stores/pokemon";
 
 const pokemon = usePokemonStore();
 
 const props = defineProps<{
-  form: Form;
   species: Species;
   variety: Variety;
 }>();
@@ -168,16 +166,20 @@ const props = defineProps<{
 const ability = ref<Ability>();
 const abilityModal = ref();
 
+const form = computed<Form | undefined>(() => pokemon.form);
+
 const abilities = computed<number>(() => {
   let abilities: number = 0;
-  if (props.form.abilities.primary) {
-    abilities++;
-  }
-  if (props.form.abilities.secondary) {
-    abilities++;
-  }
-  if (props.form.abilities.hidden) {
-    abilities++;
+  if (form.value) {
+    if (form.value.abilities.primary) {
+      abilities++;
+    }
+    if (form.value.abilities.secondary) {
+      abilities++;
+    }
+    if (form.value.abilities.hidden) {
+      abilities++;
+    }
   }
   return abilities;
 });
@@ -225,8 +227,8 @@ const sizeMultiplier = computed<number>(() => {
   }
   return 1;
 });
-const height = computed<number>(() => (props.form.height / 10) * sizeMultiplier.value);
-const weight = computed<number>(() => (props.form.weight / 10) * sizeMultiplier.value);
+const height = computed<number>(() => (form.value?.height ?? 0 / 10) * sizeMultiplier.value);
+const weight = computed<number>(() => (form.value?.weight ?? 0 / 10) * sizeMultiplier.value);
 
 function selectAbility(selectedAbility: Ability): void {
   ability.value = selectedAbility;

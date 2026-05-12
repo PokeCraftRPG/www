@@ -19,15 +19,11 @@
 </template>
 
 <script setup lang="ts">
-import type { Form } from "~/types/pokemon";
+const pokemon = usePokemonStore();
 
-const props = defineProps<{
-  form: Form;
-}>();
-
-const aura = computed<number>(() => calculateAttribute(props.form.baseStatistics.specialAttack));
-const brawn = computed<number>(() => calculateAttribute(props.form.baseStatistics.attack));
-const swift = computed<number>(() => calculateAttribute(props.form.baseStatistics.speed));
-const tough = computed<number>(() => calculateAttribute(props.form.baseStatistics.defense));
-const will = computed<number>(() => calculateAttribute(props.form.baseStatistics.specialDefense));
+const aura = computed<number>(() => calculateAttribute(pokemon.form?.baseStatistics.specialAttack ?? 0));
+const brawn = computed<number>(() => calculateAttribute(pokemon.form?.baseStatistics.attack ?? 0));
+const swift = computed<number>(() => calculateAttribute(pokemon.form?.baseStatistics.speed ?? 0));
+const tough = computed<number>(() => calculateAttribute(pokemon.form?.baseStatistics.defense ?? 0));
+const will = computed<number>(() => calculateAttribute(pokemon.form?.baseStatistics.specialDefense ?? 0));
 </script>

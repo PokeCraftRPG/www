@@ -19,7 +19,7 @@
         <h2 class="h3">{{ $t("pokemon.forms.title") }}</h2>
         <div class="row">
           <div v-for="item in forms" :key="item.id" :class="formClasses">
-            <FormCard class="d-flex flex-column h-100" :selected="form?.id === item.id" :form="item" @click="selectForm(item)" />
+            <FormCard class="d-flex flex-column h-100" :selected="form?.id === item.id" :form="item" @click="pokemon.setForm" />
           </div>
         </div>
       </template>
@@ -30,19 +30,19 @@
           <PokemonSizeCategorySelect class="col-sm-6 mb-3" :model-value="pokemon.sizeCategory" @update:model-value="pokemon.setSizeCategory" />
           <PokemonLevelInput class="col-sm-6 mb-3" :model-value="pokemon.level" @update:model-value="pokemon.setLevel" />
         </div>
-        <PokemonDetail :form="form" :species="species" :variety="variety" />
+        <PokemonDetail :species="species" :variety="variety" />
         <h3 class="h5">{{ $t("pokemon.attribute.title") }}</h3>
-        <PokemonAttributes :form="form" />
+        <PokemonAttributes />
         <h3 class="h5">{{ $t("pokemon.constitution.label") }}</h3>
-        <PokemonConstitution :form="form" @update:vitality="vitality = $event" />
+        <PokemonConstitution />
         <h3 class="h5">{{ $t("pokemon.capture.title") }}</h3>
-        <PokemonCapture :form="form" :species="species" :vitality="vitality" />
+        <PokemonCapture :species="species" :vitality="vitality" />
         <template v-if="variety.moves.length">
           <h3 class="h5">{{ $t("pokemon.moves.title") }}</h3>
           <PokemonMoves :moves="variety.moves" />
         </template>
         <h3 class="h5">{{ $t("pokemon.sprite.title") }}</h3>
-        <PokemonSprites :form="form" />
+        <PokemonSprites />
       </template>
     </template>
   </main>
@@ -50,13 +50,11 @@
 
 <script setup lang="ts">
 import type { Form, Species, Variety } from "~/types/pokemon";
-import { usePokemonStore } from "~/stores/pokemon";
 
 const config = useRuntimeConfig();
 const pokemon = usePokemonStore();
 const route = useRoute();
 
-const form = ref<Form | undefined>();
 const forms = ref<Form[]>([]);
 const variety = ref<Variety | undefined>();
 const vitality = ref<number>(0);
@@ -78,6 +76,7 @@ const { data } = await useAsyncData(
 const species = computed<Species | undefined>(() => data.value?.species);
 const title = computed<string>(() => (species.value ? (species.value.name ?? species.value.key) : ""));
 const varieties = computed<Variety[]>(() => data.value?.varieties ?? []);
+const form = computed<Form | undefined>(() => pokemon.form);
 
 const formClasses = computed<string[]>(() => {
   const classes: string[] = ["mb-3", "col-sm-12", "col-md-6"];
@@ -100,16 +99,11 @@ const varietyClasses = computed<string[]>(() => {
   return classes;
 });
 
-function selectForm(selected: Form): void {
-  if (form.value?.id !== selected.id) {
-    form.value = selected;
-  }
-}
 function selectVariety(selected: Variety): void {
   if (variety.value?.id !== selected.id) {
     variety.value = selected;
     forms.value = sortForms(selected.forms);
-    form.value = forms.value[0];
+    pokemon.setForm(forms.value[0]);
   }
 }
 
@@ -120,7 +114,7 @@ watch(
     if (defaultVariety) {
       selectVariety(defaultVariety);
     } else {
-      form.value = undefined;
+      pokemon.setForm(undefined);
       forms.value = [];
       variety.value = undefined;
     }
