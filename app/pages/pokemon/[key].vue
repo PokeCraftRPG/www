@@ -31,8 +31,10 @@
           <PokemonLevelInput class="col-sm-6 mb-3" v-model="level" />
         </div>
         <PokemonDetail :form="form" :level="level" :size-category="sizeCategorySafe" :species="species" :variety="variety" />
-        <h3 class="h5">{{ $t("pokemon.attributes.title") }}</h3>
+        <h3 class="h5">{{ $t("pokemon.attribute.title") }}</h3>
         <PokemonAttributes :form="form" :level="level" :size-category="sizeCategorySafe" />
+        <h3 class="h5">{{ $t("pokemon.constitution.label") }}</h3>
+        <PokemonConstitution :form="form" :level="level" :size-category="sizeCategorySafe" />
         <h3 class="h5">{{ $t("pokemon.capture.title") }}</h3>
         <PokemonCapture :form="form" :level="level" :size-category="sizeCategorySafe" :species="species" />
         <template v-if="variety.moves.length">

@@ -29,7 +29,7 @@
           </TarCard>
         </div>
         <div class="col-sm-4 mb-3">
-          <TarCard class="d-flex flex-column h-100" :title="$t('pokemon.moves.stamina')">
+          <TarCard class="d-flex flex-column h-100" :title="$t('pokemon.stamina')">
             <template v-if="stamina">{{ $n(stamina, "integer") }}</template>
             <span v-else class="text-muted">{{ "—" }}</span>
           </TarCard>

@@ -10,7 +10,7 @@
             <th scope="col" class="w-15">{{ $t("pokemon.moves.category.label") }}</th>
             <th scope="col" class="w-10">{{ $t("pokemon.moves.accuracy") }}</th>
             <th scope="col" class="w-10">{{ $t("pokemon.moves.power") }}</th>
-            <th scope="col" class="w-10">{{ $t("pokemon.moves.stamina") }}</th>
+            <th scope="col" class="w-10">{{ $t("pokemon.stamina") }}</th>
           </tr>
         </thead>
         <tbody>

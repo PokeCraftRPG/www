@@ -38,8 +38,9 @@ export default defineNuxtConfig({
         "@fortawesome/vue-fontawesome",
         "@vue/devtools-core",
         "@vue/devtools-kit",
-        "logitar-js",
-        "md5",
+        "bootstrap",
+        "logitar-js", // CJS
+        "md5", // CJS
       ],
     },
   },
