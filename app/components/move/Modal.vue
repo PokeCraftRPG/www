@@ -26,7 +26,7 @@
         <span v-else class="text-muted">{{ "—" }}</span>
       </div>
       <div class="col">
-        <strong>{{ $t("pokemon.moves.stamina") }}</strong>
+        <strong>{{ $t("pokemon.stamina") }}</strong>
         <br />
         <template v-if="stamina">{{ $n(stamina, "integer") }}</template>
         <span v-else class="text-muted">{{ "—" }}</span>

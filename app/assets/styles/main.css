@@ -48,3 +48,10 @@ button:disabled {
 .w-third {
   width: 33.333333% !important;
 }
+
+@media (min-width: 1200px) {
+  .col-xl-fifth {
+    flex: 0 0 auto;
+    width: 20%;
+  }
+}

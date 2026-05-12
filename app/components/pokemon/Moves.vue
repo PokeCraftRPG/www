@@ -10,11 +10,11 @@
             <th scope="col" class="w-15">{{ $t("pokemon.moves.category.label") }}</th>
             <th scope="col" class="w-10">{{ $t("pokemon.moves.accuracy") }}</th>
             <th scope="col" class="w-10">{{ $t("pokemon.moves.power") }}</th>
-            <th scope="col" class="w-10">{{ $t("pokemon.moves.stamina") }}</th>
+            <th scope="col" class="w-10">{{ $t("pokemon.stamina") }}</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="item in computedMoves" :key="item.move.id">
+          <tr v-for="item in moves" :key="item.move.id">
             <td>{{ item.level ? $n(item.level, "integer") : item.learningMethod }}</td>
             <td>
               <a href="#" @click.prevent="selectMove(item.move)">{{ item.move.name ?? item.move.key }}</a>
@@ -52,7 +52,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="item in computedMoves" :key="item.move.id">
+          <tr v-for="item in moves" :key="item.move.id">
             <td>{{ item.level ? $n(item.level, "integer") : item.learningMethod }}</td>
             <td>
               <a href="#" @click.prevent="selectMove(item.move)">{{ item.move.name ?? item.move.key }}</a>
@@ -76,7 +76,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="item in computedMoves" :key="item.move.id">
+          <tr v-for="item in moves" :key="item.move.id">
             <td>{{ item.level ? $n(item.level, "integer") : item.learningMethod }}</td>
             <td>
               <a href="#" @click.prevent="selectMove(item.move)">{{ item.move.name ?? item.move.key }}</a>
@@ -96,11 +96,8 @@ import { arrayUtils } from "logitar-js";
 
 import type { Move, VarietyMove } from "~/types/pokemon";
 
+const pokemon = usePokemonStore();
 const { orderBy } = arrayUtils;
-
-const props = defineProps<{
-  moves: VarietyMove[];
-}>();
 
 const move = ref<Move>();
 const moveModal = ref();
@@ -111,9 +108,9 @@ type ComputedMove = VarietyMove & {
   powerRoll: string;
   stamina: number;
 };
-const computedMoves = computed<ComputedMove[]>(() =>
+const moves = computed<ComputedMove[]>(() =>
   orderBy(
-    props.moves.map((item) => {
+    pokemon.variety?.moves.map((item) => {
       const learningMethod: string = $t(`pokemon.moves.learningMethod.options.${item.method}`);
       return {
         ...item,
@@ -122,7 +119,7 @@ const computedMoves = computed<ComputedMove[]>(() =>
         powerRoll: convertPowerToRoll(item.move.power ?? 0),
         stamina: convertPowerPointsToStamina(item.move.powerPoints),
       };
-    }),
+    }) ?? [],
     "sort",
   ),
 );

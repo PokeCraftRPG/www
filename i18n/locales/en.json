@@ -10,10 +10,17 @@
       "format": "Ability: {ability}",
       "title": "Abilities"
     },
-    "attributes": {
-      "options": {},
+    "attribute": {
+      "options": {
+        "Aura": "Aura",
+        "Brawn": "Brawn",
+        "Swift": "Swift",
+        "Tough": "Tough",
+        "Will": "Will"
+      },
       "title": "Attributes"
     },
+    "bonus": "Bonus/Penalty",
     "breeding": {
       "cycles": "cycle | cycle | cycles",
       "group": {
@@ -50,7 +57,10 @@
         "Standard": "Standard"
       }
     },
-    "constitution": "Constitution",
+    "constitution": {
+      "base": "Base",
+      "label": "Constitution"
+    },
     "details": "Details",
     "experience": {
       "candies": "candy | candy | candies",
@@ -81,6 +91,7 @@
         "Slow": "Slow"
       }
     },
+    "hyperTraining": "Hyper Training",
     "level": {
       "label": "Level"
     },
@@ -106,7 +117,6 @@
         }
       },
       "power": "Power",
-      "stamina": "Stamina",
       "title": "Moves"
     },
     "shiny": "Shiny",
@@ -128,15 +138,7 @@
       "alt": "{name}’s Sprite",
       "title": "Sprites"
     },
-    "statistic": {
-      "options": {
-        "Aura": "Aura",
-        "Brawn": "Brawn",
-        "Swift": "Swift",
-        "Tough": "Tough",
-        "Will": "Will"
-      }
-    },
+    "stamina": "Stamina",
     "type": {
       "alt": "{type} Type Badge",
       "label": "Type"
@@ -149,11 +151,7 @@
       "isDefault": "Default",
       "title": "Varieties"
     },
-    "vitality": {
-      "current": "Current Vitality",
-      "label": "Vitality",
-      "maximum": "Maximum Vitality"
-    }
+    "vitality": "Vitality"
   },
   "theme": {
     "title": "Theme",

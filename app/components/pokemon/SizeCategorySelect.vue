@@ -1,5 +1,13 @@
 <template>
-  <TarSelect floating :id="id" :label="$t(label)" :model-value="modelValue" :options="options" @update:model-value="onModelValueUpdate" />
+  <TarSelect
+    floating
+    :id="id"
+    :label="$t(label)"
+    :model-value="modelValue"
+    :options="options"
+    :placeholder="$t(placeholder)"
+    @update:model-value="onModelValueUpdate"
+  />
 </template>
 
 <script setup lang="ts">
@@ -16,6 +24,7 @@ withDefaults(
   {
     id: "size-category",
     label: "pokemon.size.category.label",
+    placeholder: "pokemon.size.category.placeholder",
   },
 );
 

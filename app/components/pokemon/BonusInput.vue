@@ -11,11 +11,7 @@
     step="1"
     type="number"
     @update:model-value="onModelValueUpdate"
-  >
-    <template #append>
-      <slot name="append"></slot>
-    </template>
-  </TarInput>
+  />
 </template>
 
 <script setup lang="ts">
@@ -34,9 +30,8 @@ const props = withDefaults(
     modelValue?: number | string;
   }>(),
   {
-    id: "vitality",
-    label: "pokemon.vitality",
-    min: 0,
+    id: "bonus",
+    label: "pokemon.bonus",
   },
 );
 
@@ -52,9 +47,9 @@ function onModelValueUpdate(value?: string): void {
     emit("update:model-value", 0);
   } else {
     const parsed: number = parseNumber(value) ?? 0;
-    const minimum: number = parseNumber(props.min) ?? 0;
-    const maximum: number = parseNumber(props.max) ?? 0;
-    status.value = (minimum < 0 || parsed >= minimum) && (maximum < minimum || parsed <= maximum) ? "valid" : "invalid";
+    const minimum: number | undefined = parseNumber(props.min);
+    const maximum: number | undefined = parseNumber(props.max);
+    status.value = (typeof minimum === "undefined" || parsed >= minimum) && (typeof maximum === "undefined" || parsed <= maximum) ? "valid" : "invalid";
     emit("update:model-value", parsed);
   }
 }

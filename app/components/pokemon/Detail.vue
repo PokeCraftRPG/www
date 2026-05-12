@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="form && species">
     <div class="d-none d-md-block">
       <table class="table table-striped text-center">
         <tbody>
@@ -46,7 +46,7 @@
           </tr>
           <tr>
             <th scope="row">{{ $t("pokemon.size.label") }}</th>
-            <td>{{ $t(`pokemon.size.category.options.${sizeCategory}`) }}</td>
+            <td>{{ $t(`pokemon.size.category.options.${pokemon.sizeCategory}`) }}</td>
             <td>{{ $n(height, "height") }}&nbsp;{{ $t("units.m", height) }}</td>
             <td>{{ $n(weight, "weight") }}&nbsp;{{ $t("units.kg", weight) }}</td>
           </tr>
@@ -154,35 +154,35 @@
 </template>
 
 <script setup lang="ts">
-import type { Ability, Form, SizeCategory, Species, Variety } from "~/types/pokemon";
+import type { Ability, Form, Species, Variety } from "~/types/pokemon";
 
-const props = defineProps<{
-  form: Form;
-  level: number;
-  sizeCategory: SizeCategory;
-  species: Species;
-  variety: Variety;
-}>();
+const pokemon = usePokemonStore();
 
 const ability = ref<Ability>();
 const abilityModal = ref();
 
+const form = computed<Form | undefined>(() => pokemon.form);
+const species = computed<Species | undefined>(() => pokemon.species);
+const variety = computed<Variety | undefined>(() => pokemon.variety);
+
 const abilities = computed<number>(() => {
   let abilities: number = 0;
-  if (props.form.abilities.primary) {
-    abilities++;
-  }
-  if (props.form.abilities.secondary) {
-    abilities++;
-  }
-  if (props.form.abilities.hidden) {
-    abilities++;
+  if (form.value) {
+    if (form.value.abilities.primary) {
+      abilities++;
+    }
+    if (form.value.abilities.secondary) {
+      abilities++;
+    }
+    if (form.value.abilities.hidden) {
+      abilities++;
+    }
   }
   return abilities;
 });
 
 const growthRate = computed<string>(() => {
-  switch (props.species.growthRate) {
+  switch (species.value?.growthRate) {
     case "Fluctuating":
     case "Slow":
       return $t("pokemon.growthRate.options.Slow");
@@ -192,30 +192,31 @@ const growthRate = computed<string>(() => {
   }
   return $t("pokemon.growthRate.options.Medium");
 });
-const candyCount = computed<number>(() => (props.level > 0 && props.level <= 100 ? 1 : 0));
+const candyCount = computed<number>(() => 1);
 const candySize = computed<string>(() => {
-  if (props.level > 0 && props.level <= 100) {
-    if (props.level < 5) {
-      return "XS";
-    } else if (props.level < 20) {
-      return "S";
-    } else if (props.level < 50) {
-      return "M";
-    } else if (props.level < 75) {
-      return "L";
-    } else {
-      return "XL";
-    }
+  if (pokemon.level < 5) {
+    return "XS";
+  } else if (pokemon.level < 20) {
+    return "S";
+  } else if (pokemon.level < 50) {
+    return "M";
+  } else if (pokemon.level < 75) {
+    return "L";
+  } else {
+    return "XL";
   }
-  return "";
 });
 
-const isGenderUnknown = computed<boolean>(() => typeof props.variety.genderRatio !== "number");
-const female = computed<number | undefined>(() => (typeof props.variety.genderRatio === "number" ? (8 - props.variety.genderRatio) / 8 : undefined));
-const male = computed<number | undefined>(() => (typeof props.variety.genderRatio === "number" ? props.variety.genderRatio / 8 : undefined));
+const isGenderUnknown = computed<boolean>(() => (variety.value ? typeof variety.value.genderRatio !== "number" : false));
+const female = computed<number | undefined>(() =>
+  variety.value ? (typeof variety.value.genderRatio === "number" ? (8 - variety.value.genderRatio) / 8 : undefined) : undefined,
+);
+const male = computed<number | undefined>(() =>
+  variety.value ? (typeof variety.value.genderRatio === "number" ? variety.value.genderRatio / 8 : undefined) : undefined,
+);
 
 const sizeMultiplier = computed<number>(() => {
-  switch (props.sizeCategory) {
+  switch (pokemon.sizeCategory) {
     case "ExtraSmall":
       return 0.8;
     case "Small":
@@ -227,8 +228,8 @@ const sizeMultiplier = computed<number>(() => {
   }
   return 1;
 });
-const height = computed<number>(() => (props.form.height / 10) * sizeMultiplier.value);
-const weight = computed<number>(() => (props.form.weight / 10) * sizeMultiplier.value);
+const height = computed<number>(() => (form.value?.height ?? 0 / 10) * sizeMultiplier.value);
+const weight = computed<number>(() => (form.value?.weight ?? 0 / 10) * sizeMultiplier.value);
 
 function selectAbility(selectedAbility: Ability): void {
   ability.value = selectedAbility;

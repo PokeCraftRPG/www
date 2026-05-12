@@ -37,12 +37,18 @@ export function calculateCaptureDifficulty(catchRate: number, level: number, cur
   return difficulty;
 }
 
-export function calculateConstitution(baseHP: number, sizeCategory: SizeCategory, level: number): number {
+export function calculateConstitutionBase(baseHP: number): number {
   baseHP = clamp(baseHP, 0, 255);
   if (baseHP < 10) {
+    return 0;
+  }
+  return 40 + Math.round(((baseHP - 10) / 245) * 260);
+}
+export function calculateConstitutionTotal(base: number, sizeCategory: SizeCategory, level: number): number {
+  let constitution: number = clamp(base, 0, 300);
+  if (constitution < 1) {
     return 1;
   }
-  let constitution = 40 + Math.round(((baseHP - 10) / 245) * 260);
 
   switch (sizeCategory) {
     case "ExtraSmall":
