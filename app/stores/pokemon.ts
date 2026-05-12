@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 
-import type { Form, SizeCategory } from "~/types/pokemon";
+import type { Form, SizeCategory, Variety } from "~/types/pokemon";
 
 function clamp(value: number, min: number, max: number): number {
   if (value < min) {
@@ -20,6 +20,7 @@ export const usePokemonStore = defineStore("pokemon", () => {
   const isConstitutionHyperTrained = ref<boolean>(false);
   const level = ref<number>(1);
   const sizeCategory = ref<SizeCategory>("Medium");
+  const variety = ref<Variety>();
   const vitality = ref<number>(0);
 
   // mutations
@@ -66,6 +67,10 @@ export const usePokemonStore = defineStore("pokemon", () => {
     updateVitality();
   }
 
+  function setVariety(value: Variety | null | undefined): void {
+    variety.value = value ?? undefined;
+  }
+
   function setVitality(value: number | null | undefined): void {
     vitality.value = clamp(value ?? 0, 0, constitutionTotal.value);
   }
@@ -78,12 +83,14 @@ export const usePokemonStore = defineStore("pokemon", () => {
     isConstitutionHyperTrained,
     level,
     sizeCategory,
+    variety,
     vitality,
     setConstitutionBonus,
     setConstitutionHyperTrained,
     setForm,
     setLevel,
     setSizeCategory,
+    setVariety,
     setVitality,
   };
 });

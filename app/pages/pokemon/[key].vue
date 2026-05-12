@@ -30,7 +30,7 @@
           <PokemonSizeCategorySelect class="col-sm-6 mb-3" :model-value="pokemon.sizeCategory" @update:model-value="pokemon.setSizeCategory" />
           <PokemonLevelInput class="col-sm-6 mb-3" :model-value="pokemon.level" @update:model-value="pokemon.setLevel" />
         </div>
-        <PokemonDetail :species="species" :variety="variety" />
+        <PokemonDetail :species="species" />
         <h3 class="h5">{{ $t("pokemon.attribute.title") }}</h3>
         <PokemonAttributes />
         <h3 class="h5">{{ $t("pokemon.constitution.label") }}</h3>
@@ -39,7 +39,7 @@
         <PokemonCapture :species="species" />
         <template v-if="variety.moves.length">
           <h3 class="h5">{{ $t("pokemon.moves.title") }}</h3>
-          <PokemonMoves :moves="variety.moves" />
+          <PokemonMoves />
         </template>
         <h3 class="h5">{{ $t("pokemon.sprite.title") }}</h3>
         <PokemonSprites />
@@ -56,7 +56,6 @@ const pokemon = usePokemonStore();
 const route = useRoute();
 
 const forms = ref<Form[]>([]);
-const variety = ref<Variety | undefined>();
 
 const key = computed<string>(() => (Array.isArray(route.params.key) ? route.params.key[0] : route.params.key) ?? "");
 const { data } = await useAsyncData(
@@ -75,6 +74,7 @@ const { data } = await useAsyncData(
 const species = computed<Species | undefined>(() => data.value?.species);
 const title = computed<string>(() => (species.value ? (species.value.name ?? species.value.key) : ""));
 const varieties = computed<Variety[]>(() => data.value?.varieties ?? []);
+const variety = computed<Variety | undefined>(() => pokemon.variety);
 const form = computed<Form | undefined>(() => pokemon.form);
 
 const formClasses = computed<string[]>(() => {
@@ -99,8 +99,8 @@ const varietyClasses = computed<string[]>(() => {
 });
 
 function selectVariety(selected: Variety): void {
-  if (variety.value?.id !== selected.id) {
-    variety.value = selected;
+  if (pokemon.variety?.id !== selected.id) {
+    pokemon.setVariety(selected);
     forms.value = sortForms(selected.forms);
     pokemon.setForm(forms.value[0]);
   }
@@ -115,7 +115,7 @@ watch(
     } else {
       pokemon.setForm(undefined);
       forms.value = [];
-      variety.value = undefined;
+      pokemon.setVariety(undefined);
     }
   },
   { immediate: true },

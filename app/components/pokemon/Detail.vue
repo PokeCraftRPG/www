@@ -160,13 +160,13 @@ const pokemon = usePokemonStore();
 
 const props = defineProps<{
   species: Species;
-  variety: Variety;
 }>();
 
 const ability = ref<Ability>();
 const abilityModal = ref();
 
 const form = computed<Form | undefined>(() => pokemon.form);
+const variety = computed<Variety | undefined>(() => pokemon.variety);
 
 const abilities = computed<number>(() => {
   let abilities: number = 0;
@@ -210,9 +210,13 @@ const candySize = computed<string>(() => {
   }
 });
 
-const isGenderUnknown = computed<boolean>(() => typeof props.variety.genderRatio !== "number");
-const female = computed<number | undefined>(() => (typeof props.variety.genderRatio === "number" ? (8 - props.variety.genderRatio) / 8 : undefined));
-const male = computed<number | undefined>(() => (typeof props.variety.genderRatio === "number" ? props.variety.genderRatio / 8 : undefined));
+const isGenderUnknown = computed<boolean>(() => (variety.value ? typeof variety.value.genderRatio !== "number" : false));
+const female = computed<number | undefined>(() =>
+  variety.value ? (typeof variety.value.genderRatio === "number" ? (8 - variety.value.genderRatio) / 8 : undefined) : undefined,
+);
+const male = computed<number | undefined>(() =>
+  variety.value ? (typeof variety.value.genderRatio === "number" ? variety.value.genderRatio / 8 : undefined) : undefined,
+);
 
 const sizeMultiplier = computed<number>(() => {
   switch (pokemon.sizeCategory) {
