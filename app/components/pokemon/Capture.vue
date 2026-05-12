@@ -1,9 +1,10 @@
 <template>
   <div>
-    <div class="row">
-      <PokemonVitalityInput class="col-sm-6 mb-3" id="current-vitality" label="pokemon.vitality.current" :max="maximumVitality" v-model="currentVitality" />
-      <PokemonVitalityInput class="col-sm-6 mb-3" id="maximum-vitality" label="pokemon.vitality.maximum" v-model="maximumVitality" />
-    </div>
+    <PokemonVitalityInput class="mb-3" id="current-vitality" :max="vitality" v-model="currentVitality">
+      <template #append>
+        <span class="input-group-text">/ {{ vitality }}</span>
+      </template>
+    </PokemonVitalityInput>
     <div class="row text-center">
       <div class="col-sm-6 mb-3">
         <TarCard class="d-flex flex-column h-100" :title="$t('pokemon.capture.difficulty')">{{ $n(difficulty, "integer") }}</TarCard>
@@ -23,13 +24,13 @@ const props = defineProps<{
   level: number;
   sizeCategory: SizeCategory;
   species: Species;
+  vitality: number;
 }>();
 
 const currentVitality = ref<number>(0);
-const maximumVitality = ref<number>(0);
 
 const constitution = computed<number>(() => calculateConstitution(props.form.baseStatistics.hp, props.sizeCategory, props.level));
-const difficulty = computed<number>(() => calculateCaptureDifficulty(props.species.catchRate, props.level, currentVitality.value, maximumVitality.value));
+const difficulty = computed<number>(() => calculateCaptureDifficulty(props.species.catchRate, props.level, currentVitality.value, props.vitality));
 
-watch(constitution, (constitution) => (currentVitality.value = maximumVitality.value = constitution), { immediate: true });
+watch(constitution, (constitution) => (currentVitality.value = constitution), { immediate: true });
 </script>

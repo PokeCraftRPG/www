@@ -31,7 +31,7 @@ const props = withDefaults(
   }>(),
   {
     id: "bonus",
-    label: "pokemon.bonus.label",
+    label: "pokemon.bonus",
   },
 );
 

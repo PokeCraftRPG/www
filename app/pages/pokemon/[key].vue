@@ -34,9 +34,9 @@
         <h3 class="h5">{{ $t("pokemon.attribute.title") }}</h3>
         <PokemonAttributes :form="form" :level="level" :size-category="sizeCategorySafe" />
         <h3 class="h5">{{ $t("pokemon.constitution.label") }}</h3>
-        <PokemonConstitution :form="form" :level="level" :size-category="sizeCategorySafe" />
+        <PokemonConstitution :form="form" :level="level" :size-category="sizeCategorySafe" @update:vitality="vitality = $event" />
         <h3 class="h5">{{ $t("pokemon.capture.title") }}</h3>
-        <PokemonCapture :form="form" :level="level" :size-category="sizeCategorySafe" :species="species" />
+        <PokemonCapture :form="form" :level="level" :size-category="sizeCategorySafe" :species="species" :vitality="vitality" />
         <template v-if="variety.moves.length">
           <h3 class="h5">{{ $t("pokemon.moves.title") }}</h3>
           <PokemonMoves :moves="variety.moves" />
@@ -59,6 +59,7 @@ const forms = ref<Form[]>([]);
 const level = ref<number>(1);
 const sizeCategory = ref<SizeCategory>();
 const variety = ref<Variety | undefined>();
+const vitality = ref<number>(0);
 
 const key = computed<string>(() => (Array.isArray(route.params.key) ? route.params.key[0] : route.params.key) ?? "");
 const { data } = await useAsyncData(

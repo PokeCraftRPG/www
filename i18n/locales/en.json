@@ -20,9 +20,7 @@
       },
       "title": "Attributes"
     },
-    "bonus": {
-      "label": "Bonus/Penalty"
-    },
+    "bonus": "Bonus/Penalty",
     "breeding": {
       "cycles": "cycle | cycle | cycles",
       "group": {
@@ -153,11 +151,7 @@
       "isDefault": "Default",
       "title": "Varieties"
     },
-    "vitality": {
-      "current": "Current Vitality",
-      "label": "Vitality",
-      "maximum": "Maximum Vitality"
-    }
+    "vitality": "Vitality"
   },
   "theme": {
     "title": "Theme",
