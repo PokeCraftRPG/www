@@ -23,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import type { CardOptions } from "../../types/tar/card";
+import type { CardOptions } from "~/types/tar/card";
 
 defineProps<CardOptions>();
 </script>
