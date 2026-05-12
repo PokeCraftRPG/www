@@ -26,6 +26,7 @@ export const usePokemonStore = defineStore("pokemon", () => {
       case "Large":
       case "ExtraLarge":
         sizeCategory.value = value;
+        break;
       default:
         sizeCategory.value = "Medium";
     }

@@ -129,6 +129,4 @@ watch(
 );
 
 useSeo({ title });
-
-// TODO(fpion): the size category issue has come back.
 </script>
