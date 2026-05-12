@@ -29,8 +29,11 @@ const props = defineProps<{
 
 const currentVitality = ref<number>(0);
 
-const constitution = computed<number>(() => calculateConstitution(props.form.baseStatistics.hp, props.sizeCategory, props.level));
 const difficulty = computed<number>(() => calculateCaptureDifficulty(props.species.catchRate, props.level, currentVitality.value, props.vitality));
 
-watch(constitution, (constitution) => (currentVitality.value = constitution), { immediate: true });
+watch(
+  () => props.vitality,
+  (maximumVitality) => (currentVitality.value = maximumVitality),
+  { immediate: true },
+);
 </script>

@@ -68,31 +68,6 @@ export function calculateConstitutionTotal(base: number, sizeCategory: SizeCateg
   level = clamp(level, 1, 100);
   return Math.floor((constitution * level) / 100) + Math.floor(level / 2) + 5;
 }
-export function calculateConstitution(baseHP: number, sizeCategory: SizeCategory, level: number): number {
-  baseHP = clamp(baseHP, 0, 255);
-  if (baseHP < 10) {
-    return 1;
-  }
-  let constitution = 40 + Math.round(((baseHP - 10) / 245) * 260);
-
-  switch (sizeCategory) {
-    case "ExtraSmall":
-      constitution -= 20;
-      break;
-    case "Small":
-      constitution -= 10;
-      break;
-    case "Large":
-      constitution += 10;
-      break;
-    case "ExtraLarge":
-      constitution += 20;
-      break;
-  }
-
-  level = clamp(level, 1, 100);
-  return Math.floor((constitution * level) / 100) + Math.floor(level / 2) + 5;
-}
 
 function clamp(value: number, min: number, max: number): number {
   if (value < min) {
