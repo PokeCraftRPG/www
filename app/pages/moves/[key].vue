@@ -48,7 +48,7 @@ const route = useRoute();
 const key = computed<string>(() => (Array.isArray(route.params.key) ? route.params.key[0] : route.params.key) ?? "");
 const { data } = await useAsyncData(
   `move:${key.value}`,
-  async () =>
+  () =>
     $fetch(`/api/moves/key:${key.value}`, {
       baseURL: config.public.apiBaseUrl,
     }),

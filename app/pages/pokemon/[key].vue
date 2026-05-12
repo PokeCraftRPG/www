@@ -58,20 +58,17 @@ const route = useRoute();
 const key = computed<string>(() => (Array.isArray(route.params.key) ? route.params.key[0] : route.params.key) ?? "");
 const { data } = await useAsyncData(
   `pokemon:${key.value}`,
-  async () => {
-    const species = (await $fetch(`/api/species/key:${key.value}?expand=true`, {
+  () =>
+    $fetch(`/api/species/key:${key.value}?expand=true`, {
       baseURL: config.public.apiBaseUrl,
-    })) as Species;
-    const varieties: Variety[] = sortVarieties(species.varieties);
-    return { species, varieties };
-  },
+    }),
   {
     watch: [key],
   },
-); // TODO(fpion): refactor this
+);
 const species = computed<Species | undefined>(() => pokemon.species);
 const title = computed<string>(() => (species.value ? (species.value.name ?? species.value.key) : ""));
-const varieties = computed<Variety[]>(() => data.value?.varieties ?? []); // TODO(fpion): refactor this
+const varieties = computed<Variety[]>(() => species.value?.varieties ?? []);
 const variety = computed<Variety | undefined>(() => pokemon.variety);
 const form = computed<Form | undefined>(() => pokemon.form);
 const forms = computed<Form[]>(() => variety.value?.forms ?? []);
@@ -97,20 +94,7 @@ const varietyClasses = computed<string[]>(() => {
   return classes;
 });
 
-watch(
-  data,
-  (data) => {
-    pokemon.setSpecies(data?.species);
-    const defaultVariety: Variety | undefined = data?.varieties[0];
-    if (defaultVariety) {
-      pokemon.setVariety(defaultVariety);
-    } else {
-      pokemon.setForm(undefined);
-      pokemon.setVariety(undefined);
-    }
-  },
-  { immediate: true },
-); // TODO(fpion): refactor this
+watch(data, (data) => pokemon.setSpecies(data as Species), { immediate: true });
 
 useSeo({ title });
 </script>
