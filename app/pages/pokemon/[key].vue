@@ -11,7 +11,7 @@
         <h2 class="h3">{{ $t("pokemon.varieties.title") }}</h2>
         <div class="row">
           <div v-for="item in varieties" :key="item.id" :class="varietyClasses">
-            <VarietyCard class="d-flex flex-column h-100" :selected="variety?.id === item.id" :variety="item" @click="selectVariety(item)" />
+            <VarietyCard class="d-flex flex-column h-100" :selected="variety?.id === item.id" :variety="item" @click="pokemon.setVariety(item)" />
           </div>
         </div>
       </template>
@@ -19,7 +19,7 @@
         <h2 class="h3">{{ $t("pokemon.forms.title") }}</h2>
         <div class="row">
           <div v-for="item in forms" :key="item.id" :class="formClasses">
-            <FormCard class="d-flex flex-column h-100" :selected="form?.id === item.id" :form="item" @click="pokemon.setForm" />
+            <FormCard class="d-flex flex-column h-100" :selected="form?.id === item.id" :form="item" @click="pokemon.setForm(item)" />
           </div>
         </div>
       </template>
@@ -55,8 +55,6 @@ const config = useRuntimeConfig();
 const pokemon = usePokemonStore();
 const route = useRoute();
 
-const forms = ref<Form[]>([]); // TODO(fpion): refactor this
-
 const key = computed<string>(() => (Array.isArray(route.params.key) ? route.params.key[0] : route.params.key) ?? "");
 const { data } = await useAsyncData(
   `pokemon:${key.value}`,
@@ -76,6 +74,7 @@ const title = computed<string>(() => (species.value ? (species.value.name ?? spe
 const varieties = computed<Variety[]>(() => data.value?.varieties ?? []); // TODO(fpion): refactor this
 const variety = computed<Variety | undefined>(() => pokemon.variety);
 const form = computed<Form | undefined>(() => pokemon.form);
+const forms = computed<Form[]>(() => variety.value?.forms ?? []);
 
 const formClasses = computed<string[]>(() => {
   const classes: string[] = ["mb-3", "col-sm-12", "col-md-6"];
@@ -98,24 +97,15 @@ const varietyClasses = computed<string[]>(() => {
   return classes;
 });
 
-function selectVariety(selected: Variety): void {
-  if (pokemon.variety?.id !== selected.id) {
-    pokemon.setVariety(selected);
-    forms.value = sortForms(selected.forms);
-    pokemon.setForm(forms.value[0]);
-  }
-} // TODO(fpion): refactor this
-
 watch(
   data,
   (data) => {
     pokemon.setSpecies(data?.species);
     const defaultVariety: Variety | undefined = data?.varieties[0];
     if (defaultVariety) {
-      selectVariety(defaultVariety);
+      pokemon.setVariety(defaultVariety);
     } else {
       pokemon.setForm(undefined);
-      forms.value = [];
       pokemon.setVariety(undefined);
     }
   },

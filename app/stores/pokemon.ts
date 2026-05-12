@@ -79,6 +79,12 @@ export const usePokemonStore = defineStore("pokemon", () => {
 
   function setVariety(value: Variety | null | undefined): void {
     variety.value = value ?? undefined;
+    if (value) {
+      value.forms = sortForms(value.forms);
+      setForm(value.forms[0]);
+    } else {
+      setForm(undefined);
+    }
   }
 
   function setVitality(value: number | null | undefined): void {
