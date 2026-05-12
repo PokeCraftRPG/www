@@ -85,7 +85,9 @@
         </tbody>
       </table>
     </div>
-    <MoveDetailModal v-if="move" :move="move" ref="moveModal" />
+    <ClientOnly>
+      <MoveModal v-if="move" :move="move" ref="moveModal" />
+    </ClientOnly>
   </div>
 </template>
 

@@ -147,7 +147,9 @@
         </div>
       </TarCard>
     </div>
-    <AbilityDetailModal v-if="ability" :ability="ability" ref="abilityModal" />
+    <ClientOnly>
+      <AbilityModal v-if="ability" :ability="ability" ref="abilityModal" />
+    </ClientOnly>
   </div>
 </template>
 

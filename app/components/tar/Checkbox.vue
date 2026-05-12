@@ -27,7 +27,6 @@
 
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import { nanoid } from "nanoid";
 import { parsingUtils } from "logitar-js";
 
 import type { CheckboxOptions } from "~/types/tar/checkbox";
@@ -37,6 +36,7 @@ const { parseBoolean } = parsingUtils;
 const props = defineProps<CheckboxOptions>();
 
 const inputRef = ref<HTMLInputElement>();
+const uid = useId();
 
 const classes = computed<string[]>(() => {
   const classes = ["form-check"];
@@ -51,7 +51,7 @@ const classes = computed<string[]>(() => {
   }
   return classes;
 });
-const inputId = computed<string>(() => props.id ?? nanoid());
+const inputId = computed<string>(() => props.id ?? uid);
 const inputRole = computed<string | undefined>(() => props.role ?? (props.switch ? "switch" : undefined));
 
 const emit = defineEmits<{

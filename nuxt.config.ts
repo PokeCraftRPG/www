@@ -4,8 +4,8 @@ import pkg from "./package.json";
 export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
   devtools: { enabled: true },
-  modules: ["usebootstrap", "@nuxtjs/i18n", "@pinia/nuxt", "pinia-plugin-persistedstate/nuxt"],
-  css: ["@fortawesome/fontawesome-svg-core/styles.css", "~/assets/styles/main.css"],
+  modules: ["@nuxtjs/i18n", "@pinia/nuxt", "pinia-plugin-persistedstate/nuxt"],
+  css: ["bootstrap/dist/css/bootstrap.min.css", "@fortawesome/fontawesome-svg-core/styles.css", "~/assets/styles/main.css"],
   app: {
     head: {
       link: [
