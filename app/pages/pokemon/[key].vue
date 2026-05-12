@@ -27,16 +27,16 @@
         <h2 class="h3">{{ variety.genus ? $t("pokemon.varieties.genus.format", { genus: variety.genus }) : $t("pokemon.details") }}</h2>
         <p v-if="variety.description">{{ variety.description }}</p>
         <div class="row">
-          <PokemonSizeCategorySelect class="col-sm-6 mb-3" v-model="sizeCategory" />
+          <PokemonSizeCategorySelect class="col-sm-6 mb-3" :model-value="pokemon.sizeCategory" @update:model-value="pokemon.setSizeCategory" />
           <PokemonLevelInput class="col-sm-6 mb-3" :model-value="pokemon.level" @update:model-value="pokemon.setLevel" />
         </div>
-        <PokemonDetail :form="form" :size-category="sizeCategorySafe" :species="species" :variety="variety" />
+        <PokemonDetail :form="form" :species="species" :variety="variety" />
         <h3 class="h5">{{ $t("pokemon.attribute.title") }}</h3>
-        <PokemonAttributes :form="form" :size-category="sizeCategorySafe" />
+        <PokemonAttributes :form="form" />
         <h3 class="h5">{{ $t("pokemon.constitution.label") }}</h3>
-        <PokemonConstitution :form="form" :size-category="sizeCategorySafe" @update:vitality="vitality = $event" />
+        <PokemonConstitution :form="form" @update:vitality="vitality = $event" />
         <h3 class="h5">{{ $t("pokemon.capture.title") }}</h3>
-        <PokemonCapture :form="form" :size-category="sizeCategorySafe" :species="species" :vitality="vitality" />
+        <PokemonCapture :form="form" :species="species" :vitality="vitality" />
         <template v-if="variety.moves.length">
           <h3 class="h5">{{ $t("pokemon.moves.title") }}</h3>
           <PokemonMoves :moves="variety.moves" />
@@ -49,7 +49,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Form, SizeCategory, Species, Variety } from "~/types/pokemon";
+import type { Form, Species, Variety } from "~/types/pokemon";
 import { usePokemonStore } from "~/stores/pokemon";
 
 const config = useRuntimeConfig();
@@ -58,7 +58,6 @@ const route = useRoute();
 
 const form = ref<Form | undefined>();
 const forms = ref<Form[]>([]);
-const sizeCategory = ref<SizeCategory>();
 const variety = ref<Variety | undefined>();
 const vitality = ref<number>(0);
 
@@ -101,8 +100,6 @@ const varietyClasses = computed<string[]>(() => {
   return classes;
 });
 
-const sizeCategorySafe = computed<SizeCategory>(() => sizeCategory.value ?? "Medium");
-
 function selectForm(selected: Form): void {
   if (form.value?.id !== selected.id) {
     form.value = selected;
@@ -131,7 +128,7 @@ watch(
   { immediate: true },
 );
 
-onMounted(() => (sizeCategory.value = "Medium"));
-
 useSeo({ title });
+
+// TODO(fpion): the size category issue has come back.
 </script>

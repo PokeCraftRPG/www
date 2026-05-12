@@ -17,14 +17,13 @@
 </template>
 
 <script setup lang="ts">
-import type { Form, SizeCategory, Species } from "~/types/pokemon";
+import type { Form, Species } from "~/types/pokemon";
 import { usePokemonStore } from "~/stores/pokemon";
 
 const pokemon = usePokemonStore();
 
 const props = defineProps<{
   form: Form;
-  sizeCategory: SizeCategory;
   species: Species;
   vitality: number;
 }>();

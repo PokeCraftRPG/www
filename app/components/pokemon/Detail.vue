@@ -46,7 +46,7 @@
           </tr>
           <tr>
             <th scope="row">{{ $t("pokemon.size.label") }}</th>
-            <td>{{ $t(`pokemon.size.category.options.${sizeCategory}`) }}</td>
+            <td>{{ $t(`pokemon.size.category.options.${pokemon.sizeCategory}`) }}</td>
             <td>{{ $n(height, "height") }}&nbsp;{{ $t("units.m", height) }}</td>
             <td>{{ $n(weight, "weight") }}&nbsp;{{ $t("units.kg", weight) }}</td>
           </tr>
@@ -154,14 +154,13 @@
 </template>
 
 <script setup lang="ts">
-import type { Ability, Form, SizeCategory, Species, Variety } from "~/types/pokemon";
+import type { Ability, Form, Species, Variety } from "~/types/pokemon";
 import { usePokemonStore } from "~/stores/pokemon";
 
 const pokemon = usePokemonStore();
 
 const props = defineProps<{
   form: Form;
-  sizeCategory: SizeCategory;
   species: Species;
   variety: Variety;
 }>();
@@ -214,7 +213,7 @@ const female = computed<number | undefined>(() => (typeof props.variety.genderRa
 const male = computed<number | undefined>(() => (typeof props.variety.genderRatio === "number" ? props.variety.genderRatio / 8 : undefined));
 
 const sizeMultiplier = computed<number>(() => {
-  switch (props.sizeCategory) {
+  switch (pokemon.sizeCategory) {
     case "ExtraSmall":
       return 0.8;
     case "Small":

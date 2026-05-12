@@ -19,11 +19,10 @@
 </template>
 
 <script setup lang="ts">
-import type { Form, SizeCategory } from "~/types/pokemon";
+import type { Form } from "~/types/pokemon";
 
 const props = defineProps<{
   form: Form;
-  sizeCategory: SizeCategory;
 }>();
 
 const aura = computed<number>(() => calculateAttribute(props.form.baseStatistics.specialAttack));
