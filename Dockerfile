@@ -8,12 +8,14 @@ RUN corepack enable
 COPY package.json package-lock.json ./
 
 # Install dependencies
-RUN npm clean-install
+RUN npm clean-install --ignore-scripts
 
 # Copy the entire project
 COPY . ./
 
 # Build the project
+RUN rm -rf .nuxt .output
+RUN npm run postinstall
 RUN npm run build
 
 # Build Stage 2
