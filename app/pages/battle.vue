@@ -29,7 +29,6 @@ const battle = useBattleStore();
 const config = useRuntimeConfig();
 
 const addMatchup = ref();
-const isLoading = ref<boolean>();
 
 const title = computed<string>(() => $t("pokemon.battle.title"));
 
@@ -38,7 +37,7 @@ function openAddMatchup(): void {
 }
 
 onMounted(async () => {
-  isLoading.value = true;
+  battle.setLoading(true);
   try {
     const abilities = await $fetch<SearchResults<Ability>>("/api/abilities", {
       baseURL: config.public.apiBaseUrl,
@@ -52,7 +51,7 @@ onMounted(async () => {
   } catch (e: unknown) {
     console.error(e); // TODO(fpion): handle error
   } finally {
-    isLoading.value = false;
+    battle.setLoading(false);
   }
 });
 
