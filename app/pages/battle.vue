@@ -1,6 +1,6 @@
 <template>
   <main class="container">
-    <h1>{{ $t("pokemon.battle.title") }}</h1>
+    <h1>{{ title }}</h1>
     <ClientOnly>
       <div class="mb-3">
         <TarButton icon="fas fa-plus" :text="$t('pokemon.battle.add')" variant="success" @click="openAddMatchup()" />
@@ -31,6 +31,8 @@ const config = useRuntimeConfig();
 const addMatchup = ref();
 const isLoading = ref<boolean>();
 
+const title = computed<string>(() => $t("pokemon.battle.title"));
+
 function openAddMatchup(): void {
   addMatchup.value?.open();
 }
@@ -48,4 +50,6 @@ onMounted(async () => {
     isLoading.value = false;
   }
 });
+
+useSeo({ title });
 </script>
