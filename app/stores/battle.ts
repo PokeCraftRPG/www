@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import { nanoid } from "nanoid";
 
-import type { Belligerents, Matchup } from "~/types/battle";
+import type { Belligerents, Matchup, MoveTargets } from "~/types/battle";
 import type { Move } from "~/types/pokemon";
 
 export const useBattleStore = defineStore(
@@ -27,9 +27,10 @@ export const useBattleStore = defineStore(
         ...belligerents,
         id: nanoid(),
         level: 1,
+        moveTargets: "single",
         power: 1,
         attack: 1,
-        defense: 6,
+        defense: 1,
       });
     }
 
@@ -74,6 +75,14 @@ export const useBattleStore = defineStore(
       }
     }
 
+    function setMatchupMoveTargets(id: string, moveTargets: MoveTargets): void {
+      const index: number = findMatchupIndex(id);
+      const matchup: Matchup | undefined = matchups.value.at(index);
+      if (matchup) {
+        matchups.value.splice(index, 1, { ...matchup, moveTargets });
+      }
+    }
+
     function setMatchupPower(id: string, power: number): void {
       const index: number = findMatchupIndex(id);
       const matchup: Matchup | undefined = matchups.value.at(index);
@@ -99,6 +108,7 @@ export const useBattleStore = defineStore(
       setMatchupDefense,
       setMatchupLevel,
       setMatchupMove,
+      setMatchupMoveTargets,
       setMatchupPower,
       setMoves,
     };

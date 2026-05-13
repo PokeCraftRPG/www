@@ -16,7 +16,10 @@ export type Matchup = Belligerents & {
   id: string;
   level: number;
   move?: Move;
+  moveTargets: MoveTargets;
   power: number;
   attack: number;
   defense: number;
 };
+
+export type MoveTargets = "single" | "multiple";

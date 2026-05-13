@@ -34,6 +34,15 @@
         </template>
       </div>
     </div>
+    <div v-if="move" class="mb-3">
+      <TarCheckbox
+        :id="`${id}-move-targets`"
+        :label="$t('pokemon.moves.multipleTargets')"
+        :model-value="isMultipleTargets"
+        switch
+        @update:model-value="setMultipleTargets"
+      />
+    </div>
     <p v-if="move?.description">{{ move.description }}</p>
     <h3 class="h5">{{ $t("pokemon.battle.attacker.format", { name: matchup.attacker.name }) }}</h3>
     <div class="row">
@@ -84,6 +93,7 @@ const props = defineProps<{
 
 const id = computed<string>(() => ["matchup", props.matchup.id].join("-"));
 
+const isMultipleTargets = computed<boolean>(() => props.matchup.moveTargets === "multiple");
 const move = computed<Move | undefined>(() => props.matchup.move);
 const powerRoll = computed<string>(() => convertPowerToRoll(move.value?.power ?? 0));
 
@@ -93,9 +103,11 @@ const damage = computed<number>(() => {
   let damage: number = Math.ceil(power * (level / 100) * (attack / defense)) + 1 + tier.value;
 
   // Modifiers
-  damage = Math.floor(damage * 1.0);
+  if (isMultipleTargets.value) {
+    damage = Math.floor(damage * 0.75);
+  }
 
-  return damage;
+  return Math.max(damage, 1);
 });
 const tier = computed<number>(() => calculateTier(props.matchup.level));
 
@@ -106,18 +118,29 @@ function rollPower(): void {
   }
 }
 
+function setMultipleTargets(value: boolean): void {
+  battle.setMatchupMoveTargets(props.matchup.id, value ? "multiple" : "single");
+}
+
 /* TODO(fpion):
  * Attack Stage
  * Defense Stage
- * Targets: 1+
- * Parental Bond
- * Glaive Rush
- * Weather
- * Critical
- * STAB
- * Type Effectiveness
- * Burn
- * Other
+ * Weather is
+ * - 1.5 if a Water-type move is being used during rain or a Fire-type move or Hydro Steam during harsh sunlight,
+ * - and 0.5 if a Water-type move (besides Hydro Steam) is used during harsh sunlight or a Fire-type move during rain,
+ * - and 1 otherwise or if any Pokémon on the field have the Ability Cloud Nine or Air Lock.
+ * Critical is 1.5 for a critical hit, and 1 otherwise. Decimals are rounded down to the nearest integer. It is always 1 if the target's Ability is Battle Armor or Shell Armor or if the target is under the effect of Lucky Chant.
+ * STAB is the same-type attack bonus.
+ * - This is equal to 1.5 if the move's type matches any of the user's type,
+ * - 2 if the user of the move additionally has Adaptability,
+ * - and 1 otherwise.
+ * - When Terastallized, STAB is (if not 1):
+ *   - 1.5 if the move's type matches either the Pokemon's original type(s) or a different Tera Type from its original types, and the attacker's Ability is not Adaptability.
+ *   - 2 if the move's type matches the same Tera Type as one of the Pokemon's original types and the attacker's Ability is not Adaptability, or the situation above, if the attacker's Ability is Adaptability.
+ *   - However, if STAB only applies from the attacker's original type(s), not its Tera Type, STAB will always be 1.5, even if the attacker's Ability is Adaptability.
+ * Type Effectiveness: 0, 1/8, 1/4, 1/2, 1, 2, 4 or 8
+ * Burn is 0.5 if the attacker is burned, its Ability is not Guts, and the used move is a physical move (other than Facade from Generation VI onward), and 1 otherwise.
+ * Other (including Parental Bond and Glaive Rush)
  */
 
 // TODO(fpion): calculer l’Accuracy et l’Evasion.
