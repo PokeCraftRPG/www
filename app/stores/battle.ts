@@ -2,15 +2,18 @@ import { defineStore } from "pinia";
 import { nanoid } from "nanoid";
 
 import type { Belligerents, Matchup, MoveTargets } from "~/types/battle";
-import type { Move } from "~/types/pokemon";
+import type { Ability, Move } from "~/types/pokemon";
 
 export const useBattleStore = defineStore(
   "battle",
   () => {
+    // state
+    const abilities = ref<Ability[]>([]);
     const isLoading = ref<boolean>(false);
     const matchups = ref<Matchup[]>([]);
     const moves = ref<Move[]>([]);
 
+    // actions
     function findMatchupIndex(id: string): number {
       const indices: number[] = [];
       for (let index = 0; index < matchups.value.length; index++) {
@@ -37,6 +40,10 @@ export const useBattleStore = defineStore(
     function removeMatchup(id: string): void {
       const index: number = findMatchupIndex(id);
       if (index >= 0) matchups.value.splice(index, 1);
+    }
+
+    function setAbilities(value: Ability[]): void {
+      abilities.value = [...value];
     }
 
     function setLoading(value: boolean): void {
@@ -97,12 +104,14 @@ export const useBattleStore = defineStore(
 
     return {
       // state
+      abilities,
       isLoading,
       matchups,
       moves,
       // actions
       addMatchup,
       removeMatchup,
+      setAbilities,
       setLoading,
       setMatchupAttack,
       setMatchupDefense,

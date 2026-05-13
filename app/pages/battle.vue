@@ -22,7 +22,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Move } from "~/types/pokemon";
+import type { Ability, Move } from "~/types/pokemon";
 import type { SearchResults } from "~/types/search";
 
 const battle = useBattleStore();
@@ -40,10 +40,15 @@ function openAddMatchup(): void {
 onMounted(async () => {
   isLoading.value = true;
   try {
-    const results = await $fetch<SearchResults<Move>>("/api/moves", {
+    const abilities = await $fetch<SearchResults<Ability>>("/api/abilities", {
       baseURL: config.public.apiBaseUrl,
     });
-    battle.setMoves(results.items);
+    battle.setAbilities(abilities.items);
+
+    const moves = await $fetch<SearchResults<Move>>("/api/moves", {
+      baseURL: config.public.apiBaseUrl,
+    });
+    battle.setMoves(moves.items);
   } catch (e: unknown) {
     console.error(e); // TODO(fpion): handle error
   } finally {
