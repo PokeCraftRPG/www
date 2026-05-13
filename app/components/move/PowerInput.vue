@@ -12,7 +12,11 @@
     step="1"
     type="number"
     @update:model-value="onModelValueUpdate"
-  />
+  >
+    <template #append>
+      <slot name="append"></slot>
+    </template>
+  </TarInput>
 </template>
 
 <script setup lang="ts">
@@ -32,8 +36,9 @@ const props = withDefaults(
     required?: boolean | string;
   }>(),
   {
-    id: "level",
+    id: "power",
     label: "pokemon.moves.power",
+    min: 1,
   },
 );
 

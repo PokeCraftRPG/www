@@ -9,11 +9,11 @@
         <TarAccordionItem
           v-for="(matchup, index) in battle.matchups"
           :active="!index"
-          :id="`matchup-${index}`"
+          :id="`matchup-${matchup.id}`"
           :key="index"
           :title="[matchup.attacker.name, $t('pokemon.battle.versus'), matchup.target.name].join(' ')"
         >
-          <p>Hello World!</p>
+          <BattleMatchup :matchup="matchup" />
         </TarAccordionItem>
       </TarAccordion>
       <BattleAddMatchup ref="addMatchup" @added="battle.addMatchup" />
@@ -22,11 +22,30 @@
 </template>
 
 <script setup lang="ts">
+import type { Move } from "~/types/pokemon";
+import type { SearchResults } from "~/types/search";
+
 const battle = useBattleStore();
+const config = useRuntimeConfig();
 
 const addMatchup = ref();
+const isLoading = ref<boolean>();
 
 function openAddMatchup(): void {
   addMatchup.value?.open();
 }
+
+onMounted(async () => {
+  isLoading.value = true;
+  try {
+    const results = await $fetch<SearchResults<Move>>("/api/moves", {
+      baseURL: config.public.apiBaseUrl,
+    });
+    battle.setMoves(results.items);
+  } catch (e: unknown) {
+    console.error(e); // TODO(fpion): handle error
+  } finally {
+    isLoading.value = false;
+  }
+});
 </script>

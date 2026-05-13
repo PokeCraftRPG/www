@@ -36,6 +36,7 @@ const props = withDefaults(
 );
 
 const emit = defineEmits<{
+  (e: "error", value: unknown): void;
   (e: "selected", value: Form | undefined): void;
   (e: "update:model-value", value: string): void;
 }>();
@@ -44,7 +45,7 @@ const forms = ref<Form[]>([]);
 const isLoading = ref<boolean>(false);
 const total = ref<number>(0);
 
-const options = computed<SelectOption[]>(() => sortForms(forms.value).map(({ id, key, name }) => ({ text: name ?? key, value: id, sort: key })));
+const options = computed<SelectOption[]>(() => sortForms(forms.value).map(({ id, key, name }) => ({ text: name ?? key, value: id })));
 
 function onModelValueUpdate(id: string | undefined): void {
   emit("update:model-value", id ?? "");
@@ -57,16 +58,23 @@ watch(
   () => props.variety,
   async (variety) => {
     if (variety) {
-      const results = await $fetch<SearchResults<Form>>("/api/forms", {
-        query: { variety },
-        baseURL: config.public.apiBaseUrl,
-      });
-      forms.value = [...results.items];
-      total.value = results.total;
+      isLoading.value = true;
+      try {
+        const results = await $fetch<SearchResults<Form>>("/api/forms", {
+          query: { variety },
+          baseURL: config.public.apiBaseUrl,
+        });
+        forms.value = [...results.items];
+        total.value = results.total;
 
-      const selected: Form | undefined = sortForms(results.items)[0];
-      emit("update:model-value", selected ? selected.id : "");
-      emit("selected", selected);
+        const selected: Form | undefined = sortForms(results.items)[0];
+        emit("update:model-value", selected ? selected.id : "");
+        emit("selected", selected);
+      } catch (e: unknown) {
+        emit("error", e);
+      } finally {
+        isLoading.value = false;
+      }
     } else {
       forms.value = [];
       total.value = 0;

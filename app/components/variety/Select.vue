@@ -36,6 +36,7 @@ const props = withDefaults(
 );
 
 const emit = defineEmits<{
+  (e: "error", value: unknown): void;
   (e: "selected", value: Variety | undefined): void;
   (e: "update:model-value", value: string): void;
 }>();
@@ -57,16 +58,23 @@ watch(
   () => props.species,
   async (species) => {
     if (species) {
-      const results = await $fetch<SearchResults<Variety>>("/api/varieties", {
-        query: { species },
-        baseURL: config.public.apiBaseUrl,
-      });
-      varieties.value = [...results.items];
-      total.value = results.total;
+      isLoading.value = true;
+      try {
+        const results = await $fetch<SearchResults<Variety>>("/api/varieties", {
+          query: { species },
+          baseURL: config.public.apiBaseUrl,
+        });
+        varieties.value = [...results.items];
+        total.value = results.total;
 
-      const selected: Variety | undefined = sortVarieties(results.items)[0];
-      emit("update:model-value", selected ? selected.id : "");
-      emit("selected", selected);
+        const selected: Variety | undefined = sortVarieties(results.items)[0];
+        emit("update:model-value", selected ? selected.id : "");
+        emit("selected", selected);
+      } catch (e: unknown) {
+        emit("error", e);
+      } finally {
+        isLoading.value = false;
+      }
     } else {
       varieties.value = [];
       total.value = 0;

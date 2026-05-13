@@ -12,7 +12,11 @@
     step="1"
     type="number"
     @update:model-value="onModelValueUpdate"
-  />
+  >
+    <template #append>
+      <slot name="append"></slot>
+    </template>
+  </TarInput>
 </template>
 
 <script setup lang="ts">

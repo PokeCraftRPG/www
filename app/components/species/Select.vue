@@ -38,6 +38,7 @@ withDefaults(
 );
 
 const emit = defineEmits<{
+  (e: "error", value: unknown): void;
   (e: "selected", value: Species | undefined): void;
   (e: "update:model-value", value: string): void;
 }>();
@@ -61,6 +62,7 @@ function onModelValueUpdate(id: string | undefined): void {
 }
 
 onMounted(async () => {
+  isLoading.value = true;
   try {
     const results = await $fetch<SearchResults<Species>>("/api/species", {
       baseURL: config.public.apiBaseUrl,
@@ -68,7 +70,9 @@ onMounted(async () => {
     species.value = [...results.items];
     total.value = results.total;
   } catch (e: unknown) {
-    console.error(e); // TODO(fpion): handle error
+    emit("error", e);
+  } finally {
+    isLoading.value = false;
   }
 });
 </script>

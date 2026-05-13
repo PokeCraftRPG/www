@@ -1,4 +1,4 @@
-import type { Form, Species, Variety } from "./pokemon";
+import type { Form, Move, Species, Variety } from "./pokemon";
 
 export type Belligerent = {
   species?: Species;
@@ -12,4 +12,11 @@ export type Belligerents = {
   target: Belligerent;
 };
 
-export type Matchup = Belligerents;
+export type Matchup = Belligerents & {
+  id: string;
+  level: number;
+  move?: Move;
+  power: number;
+  attack: number;
+  defense: number;
+};

@@ -2,7 +2,8 @@
   "actions": {
     "add": "Add",
     "cancel": "Cancel",
-    "close": "Close"
+    "close": "Close",
+    "remove": "Remove"
   },
   "brand": "PokéCraft",
   "loading": "Loading…",
@@ -25,12 +26,19 @@
     },
     "battle": {
       "add": "Add Matchup",
-      "attacker": "Attacker",
+      "attacker": {
+        "format": "Attacker: {name}",
+        "label": "Attacker"
+      },
+      "damage": "Damage",
       "statistic": {
         "attack": "Attack",
         "defense": "Defense"
       },
-      "target": "Target",
+      "target": {
+        "format": "Target: {name}",
+        "label": "Target"
+      },
       "title": "Battle",
       "versus": "vs."
     },
@@ -122,6 +130,11 @@
     "level": {
       "label": "Level"
     },
+    "move": {
+      "format": "Move: {name}",
+      "label": "Move",
+      "placeholder": "Select a Pokémon move"
+    },
     "moves": {
       "accuracy": "Accuracy",
       "category": {
@@ -170,6 +183,9 @@
       "title": "Sprites"
     },
     "stamina": "Stamina",
+    "tier": {
+      "format": "Tier: {tier}"
+    },
     "type": {
       "alt": "{type} Type Badge",
       "label": "Type"
@@ -188,6 +204,7 @@
     },
     "vitality": "Vitality"
   },
+  "search": "Search",
   "theme": {
     "title": "Theme",
     "auto": "Auto",

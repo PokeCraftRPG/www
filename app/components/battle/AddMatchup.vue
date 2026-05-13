@@ -2,7 +2,7 @@
   <TarModal :close="$t('actions.close')" fade ref="modalRef" size="x-large" :title="$t('pokemon.battle.add')">
     <form class="row" @submit.prevent="submit">
       <div class="col-lg-6">
-        <h5 class="h6">{{ $t("pokemon.battle.attacker") }}</h5>
+        <h5 class="h6">{{ $t("pokemon.battle.attacker.label") }}</h5>
         <SpeciesSelect class="mb-3" id="attacker-species" :model-value="attacker.species?.id" required @selected="attacker.species = $event" />
         <VarietySelect
           v-if="attacker.species"
@@ -25,7 +25,7 @@
         <NameInput v-show="attacker.form" class="mb-3" id="attacker-name" min="1" max="20" required v-model="attacker.name" />
       </div>
       <div class="col-lg-6">
-        <h5 class="h6">{{ $t("pokemon.battle.target") }}</h5>
+        <h5 class="h6">{{ $t("pokemon.battle.target.label") }}</h5>
         <SpeciesSelect class="mb-3" id="target-species" :model-value="target.species?.id" required @selected="target.species = $event" />
         <VarietySelect
           v-if="target.species"
