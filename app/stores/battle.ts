@@ -1,4 +1,3 @@
-import { nanoid } from "nanoid";
 import { defineStore } from "pinia";
 
 import type { Belligerents, Matchup } from "~/types/battle";
@@ -10,8 +9,6 @@ export const useBattleStore = defineStore(
 
     function addMatchup(belligerents: Belligerents): void {
       matchups.value.push({
-        id: nanoid(),
-        title: [belligerents.attacker.name, "vs.", belligerents.target.name].join(" "),
         ...belligerents,
       });
     }
@@ -19,8 +16,8 @@ export const useBattleStore = defineStore(
     return { matchups, addMatchup };
   },
   {
-    persist: true,
+    persist: {
+      storage: piniaPluginPersistedstate.localStorage(),
+    },
   },
 );
-
-// TODO(fpion): localStorage
