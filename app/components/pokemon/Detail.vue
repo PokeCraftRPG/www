@@ -65,11 +65,11 @@
               <a href="#">{{ growthRate }}</a>
             </td>
             <td>
-              <template v-if="candyCount">{{ $n(candyCount, "integer") }}&nbsp;{{ $t("pokemon.experience.candies", candyCount) }}</template>
+              <template v-if="candies">{{ candies }}</template>
               <span v-else class="text-muted">{{ "—" }}</span>
             </td>
             <td>
-              <template v-if="candySize">{{ candySize }}</template>
+              <template v-if="grit">{{ grit }}</template>
               <span v-else class="text-muted">{{ "—" }}</span>
             </td>
           </tr>
@@ -142,8 +142,8 @@
           <div class="col">
             <a href="#">{{ growthRate }}</a>
           </div>
-          <div v-if="candyCount" class="col">{{ $n(candyCount, "integer") }}&nbsp;{{ $t("pokemon.experience.candies", candyCount) }}</div>
-          <div v-if="candySize" class="col">{{ candySize }}</div>
+          <div v-if="candies" class="col">{{ candies }}</div>
+          <div v-if="grit" class="col">{{ grit }}</div>
         </div>
       </TarCard>
     </div>
@@ -154,7 +154,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Ability, Form, Species, Variety } from "~/types/pokemon";
+import type { Ability, Form, Species, Variety, Yield } from "~/types/pokemon";
 
 const pokemon = usePokemonStore();
 
@@ -192,19 +192,77 @@ const growthRate = computed<string>(() => {
   }
   return $t("pokemon.growthRate.options.Medium");
 });
-const candyCount = computed<number>(() => 1);
-const candySize = computed<string>(() => {
-  if (pokemon.level < 5) {
-    return "XS";
-  } else if (pokemon.level < 20) {
-    return "S";
-  } else if (pokemon.level < 50) {
-    return "M";
-  } else if (pokemon.level < 75) {
-    return "L";
-  } else {
-    return "XL";
+const candies = computed<string>(() => {
+  const _yield: number = pokemon.form?.yield.experience ?? 0;
+  if (_yield < 5) {
+    return "";
   }
+
+  const parts: string[] = [];
+  if (_yield < 60) {
+    parts.push(`${Math.floor(_yield / 5)}/12`);
+  } else if (_yield <= 260) {
+    parts.push("1");
+  } else if (_yield <= 350) {
+    parts.push("1");
+    parts.push(`${Math.ceil((_yield - 260) / 10)}/10`);
+  } else if (_yield <= 360) {
+    parts.push("2");
+  } else if (_yield <= 380) {
+    parts.push("2");
+    parts.push("1/8");
+  } else if (_yield <= 390) {
+    parts.push("2");
+    parts.push("2/8");
+  } else if (_yield <= 400) {
+    parts.push("2");
+    parts.push("3/8");
+  } else if (_yield <= 500) {
+    parts.push("2");
+    parts.push("4/8");
+  } else if (_yield <= 600) {
+    parts.push("2");
+    parts.push("5/8");
+  } else {
+    parts.push("2");
+    parts.push("6/8");
+  }
+
+  let size: string = "XL";
+  if (pokemon.level < 5) {
+    size = "XS";
+  } else if (pokemon.level < 20) {
+    size = "S";
+  } else if (pokemon.level < 50) {
+    size = "M";
+  } else if (pokemon.level < 75) {
+    size = "L";
+  }
+
+  return $t("pokemon.experience.candiesFormat", { candies: parts.join(" + "), size });
+});
+const grit = computed<string>(() => {
+  if (!pokemon.form) {
+    return "";
+  }
+
+  const _yield: Yield = pokemon.form.yield;
+  const chance: string = `${clamp(_yield.hp + _yield.attack + _yield.defense + _yield.specialAttack + _yield.specialDefense + _yield.speed, 1, 3)}/4`;
+
+  let size: string = $t("pokemon.experience.grit.options.Dust");
+  switch (pokemon.tier) {
+    case 1:
+      size = $t("pokemon.experience.grit.options.Gravel");
+      break;
+    case 2:
+      size = $t("pokemon.experience.grit.options.Pebble");
+      break;
+    case 3:
+      size = $t("pokemon.experience.grit.options.Rock");
+      break;
+  }
+
+  return $t("pokemon.experience.grit.format", { chance, size });
 });
 
 const isGenderUnknown = computed<boolean>(() => (variety.value ? typeof variety.value.genderRatio !== "number" : false));
@@ -235,4 +293,6 @@ function selectAbility(selectedAbility: Ability): void {
   ability.value = selectedAbility;
   setTimeout(() => abilityModal.value?.open(), 1);
 }
+
+// TODO(fpion): modal/tooltip/other information when growth rate clicked!
 </script>

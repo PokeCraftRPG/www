@@ -2,15 +2,6 @@ import { defineStore } from "pinia";
 
 import type { Form, SizeCategory, Species, Variety } from "~/types/pokemon";
 
-function clamp(value: number, min: number, max: number): number {
-  if (value < min) {
-    return min;
-  } else if (value > max) {
-    return max;
-  }
-  return value;
-}
-
 export const usePokemonStore = defineStore("pokemon", () => {
   // state
   const constitutionBase = ref<number>(0);
@@ -28,6 +19,17 @@ export const usePokemonStore = defineStore("pokemon", () => {
   const captureDifficulty = computed<number>(() =>
     species.value ? calculateCaptureDifficulty(species.value.catchRate, level.value, vitality.value, constitutionTotal.value) : 0,
   );
+
+  const tier = computed<number>(() => {
+    if (level.value < 5) {
+      return 0;
+    } else if (level.value < 20) {
+      return 1;
+    } else if (level.value < 50) {
+      return 2;
+    }
+    return 3;
+  });
 
   // mutations
   function updateVitality(): void {
@@ -111,6 +113,7 @@ export const usePokemonStore = defineStore("pokemon", () => {
     vitality,
     // getters
     captureDifficulty,
+    tier,
     // actions
     setConstitutionBonus,
     setConstitutionHyperTrained,

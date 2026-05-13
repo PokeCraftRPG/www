@@ -68,12 +68,3 @@ export function calculateConstitutionTotal(base: number, sizeCategory: SizeCateg
   level = clamp(level, 1, 100);
   return Math.floor((constitution * level) / 100) + Math.floor(level / 2) + 5;
 }
-
-function clamp(value: number, min: number, max: number): number {
-  if (value < min) {
-    return min;
-  } else if (value > max) {
-    return max;
-  }
-  return value;
-}

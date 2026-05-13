@@ -63,7 +63,16 @@
     },
     "details": "Details",
     "experience": {
-      "candies": "candy | candy | candies",
+      "candiesFormat": "Candies: {candies} ({size})",
+      "grit": {
+        "format": "Grit: {chance} ({size})",
+        "options": {
+          "Dust": "Dust",
+          "Gravel": "Gravel",
+          "Pebble": "Pebble",
+          "Rock": "Rock"
+        }
+      },
       "label": "Experience"
     },
     "forms": {
