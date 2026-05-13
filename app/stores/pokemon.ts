@@ -20,16 +20,7 @@ export const usePokemonStore = defineStore("pokemon", () => {
     species.value ? calculateCaptureDifficulty(species.value.catchRate, level.value, vitality.value, constitutionTotal.value) : 0,
   );
 
-  const tier = computed<number>(() => {
-    if (level.value < 5) {
-      return 0;
-    } else if (level.value < 20) {
-      return 1;
-    } else if (level.value < 50) {
-      return 2;
-    }
-    return 3;
-  });
+  const tier = computed<number>(() => calculateTier(level.value));
 
   // mutations
   function updateVitality(): void {

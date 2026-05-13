@@ -57,9 +57,8 @@ const modalRef = ref();
 function close(): void {
   modalRef.value?.hide();
 }
-
 function open(): void {
   modalRef.value?.show();
 }
-defineExpose({ open });
+defineExpose({ close, open });
 </script>

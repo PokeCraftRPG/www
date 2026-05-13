@@ -41,6 +41,7 @@ export default defineNuxtConfig({
         "bootstrap",
         "logitar-js", // CJS
         "md5", // CJS
+        "nanoid",
       ],
     },
   },

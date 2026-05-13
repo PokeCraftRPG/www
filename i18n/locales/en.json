@@ -1,9 +1,12 @@
 {
   "actions": {
+    "add": "Add",
+    "cancel": "Cancel",
     "close": "Close"
   },
   "brand": "PokéCraft",
   "loading": "Loading…",
+  "name": "Name",
   "pokemon": {
     "abilities": {
       "details": "View full details",
@@ -19,6 +22,17 @@
         "Will": "Will"
       },
       "title": "Attributes"
+    },
+    "battle": {
+      "add": "Add Matchup",
+      "attacker": "Attacker",
+      "statistic": {
+        "attack": "Attack",
+        "defense": "Defense"
+      },
+      "target": "Target",
+      "title": "Battle",
+      "versus": "vs."
     },
     "bonus": "Bonus/Penalty",
     "breeding": {
@@ -74,6 +88,10 @@
         }
       },
       "label": "Experience"
+    },
+    "form": {
+      "label": "Form",
+      "placeholder": "Select a Pokémon form"
     },
     "forms": {
       "kind": {
@@ -143,6 +161,10 @@
       },
       "label": "Size"
     },
+    "species": {
+      "label": "Species",
+      "placeholder": "Select a Pokémon species"
+    },
     "sprite": {
       "alt": "{name}’s Sprite",
       "title": "Sprites"
@@ -159,6 +181,10 @@
       },
       "isDefault": "Default",
       "title": "Varieties"
+    },
+    "variety": {
+      "label": "Variety",
+      "placeholder": "Select a Pokémon variety"
     },
     "vitality": "Vitality"
   },

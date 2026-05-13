@@ -32,10 +32,9 @@ const props = withDefaults(
     required?: boolean | string;
   }>(),
   {
-    id: "level",
-    label: "pokemon.level.label",
+    id: "attack",
+    label: "pokemon.battle.statistic.defense",
     min: 1,
-    max: 100,
   },
 );
 
