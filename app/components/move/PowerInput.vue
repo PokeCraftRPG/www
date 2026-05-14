@@ -36,10 +36,9 @@ const props = withDefaults(
     required?: boolean | string;
   }>(),
   {
-    id: "level",
-    label: "pokemon.level.label",
+    id: "power",
+    label: "pokemon.moves.power",
     min: 1,
-    max: 100,
   },
 );
 

@@ -5,18 +5,12 @@
     :label="$t(label)"
     :min="min"
     :max="max"
-    :model-value="modelValue?.toString()"
+    :model-value="modelValue"
     :placeholder="$t(label)"
     :required="required"
     :status="status"
-    step="1"
-    type="number"
     @update:model-value="onModelValueUpdate"
-  >
-    <template #append>
-      <slot name="append"></slot>
-    </template>
-  </TarInput>
+  />
 </template>
 
 <script setup lang="ts">
@@ -32,33 +26,31 @@ const props = withDefaults(
     label?: string;
     max?: number | string;
     min?: number | string;
-    modelValue?: number | string;
+    modelValue?: string;
     required?: boolean | string;
   }>(),
   {
-    id: "level",
-    label: "pokemon.level.label",
-    min: 1,
-    max: 100,
+    id: "name",
+    label: "name",
   },
 );
 
 const emit = defineEmits<{
-  (e: "update:model-value", value: number): void;
+  (e: "update:model-value", value: string): void;
 }>();
 
 const touched = ref<boolean>(false);
 
 const maximum = computed<number | undefined>(() => parseNumber(props.max));
 const minimum = computed<number | undefined>(() => parseNumber(props.min));
-const value = computed<number>(() => parseNumber(props.modelValue) ?? 0);
+const value = computed<string>(() => props.modelValue ?? "");
 
 const errors = computed<string[]>(() => {
   const errors: string[] = [];
-  if (typeof minimum.value === "number" && value.value < minimum.value) {
+  if (typeof minimum.value === "number" && value.value.length < minimum.value) {
     errors.push("min");
   }
-  if (typeof maximum.value === "number" && value.value > maximum.value) {
+  if (typeof maximum.value === "number" && value.value.length > maximum.value) {
     errors.push("max");
   }
   return errors;
@@ -68,6 +60,6 @@ const status = computed<InputStatus | undefined>(() => (touched.value ? (isValid
 
 function onModelValueUpdate(value: string | undefined): void {
   touched.value = true;
-  emit("update:model-value", parseNumber(value) ?? 0);
+  emit("update:model-value", value ?? "");
 }
 </script>

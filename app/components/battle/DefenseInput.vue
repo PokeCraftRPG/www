@@ -12,11 +12,7 @@
     step="1"
     type="number"
     @update:model-value="onModelValueUpdate"
-  >
-    <template #append>
-      <slot name="append"></slot>
-    </template>
-  </TarInput>
+  />
 </template>
 
 <script setup lang="ts">
@@ -36,10 +32,9 @@ const props = withDefaults(
     required?: boolean | string;
   }>(),
   {
-    id: "level",
-    label: "pokemon.level.label",
+    id: "attack",
+    label: "pokemon.battle.statistic.defense",
     min: 1,
-    max: 100,
   },
 );
 

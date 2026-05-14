@@ -68,3 +68,15 @@ export function calculateConstitutionTotal(base: number, sizeCategory: SizeCateg
   level = clamp(level, 1, 100);
   return Math.floor((constitution * level) / 100) + Math.floor(level / 2) + 5;
 }
+
+export function calculateTier(level: number): number {
+  if (level < 5) {
+    return 0;
+  } else if (level < 20) {
+    return 1;
+  } else if (level < 50) {
+    return 2;
+  } else {
+    return 3;
+  }
+}

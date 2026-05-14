@@ -1,9 +1,13 @@
 {
   "actions": {
-    "close": "Close"
+    "add": "Add",
+    "cancel": "Cancel",
+    "close": "Close",
+    "remove": "Remove"
   },
   "brand": "PokéCraft",
   "loading": "Loading…",
+  "name": "Name",
   "pokemon": {
     "abilities": {
       "details": "View full details",
@@ -19,6 +23,27 @@
         "Will": "Will"
       },
       "title": "Attributes"
+    },
+    "battle": {
+      "add": "Add Matchup",
+      "attacker": {
+        "format": "Attacker: {name}",
+        "label": "Attacker"
+      },
+      "damage": {
+        "format": "Damage: {damage}",
+        "label": "Damage"
+      },
+      "statistic": {
+        "attack": "Attack",
+        "defense": "Defense"
+      },
+      "target": {
+        "format": "Target: {name}",
+        "label": "Target"
+      },
+      "title": "Battle",
+      "versus": "vs."
     },
     "bonus": "Bonus/Penalty",
     "breeding": {
@@ -75,6 +100,10 @@
       },
       "label": "Experience"
     },
+    "form": {
+      "label": "Form",
+      "placeholder": "Select a Pokémon form"
+    },
     "forms": {
       "kind": {
         "options": {
@@ -104,6 +133,11 @@
     "level": {
       "label": "Level"
     },
+    "move": {
+      "format": "Move: {name}",
+      "label": "Move",
+      "placeholder": "Select a Pokémon move"
+    },
     "moves": {
       "accuracy": "Accuracy",
       "category": {
@@ -125,6 +159,7 @@
           "Reminder": "Reminder"
         }
       },
+      "multipleTargets": "Multiple Targets",
       "power": "Power",
       "title": "Moves"
     },
@@ -143,11 +178,18 @@
       },
       "label": "Size"
     },
+    "species": {
+      "label": "Species",
+      "placeholder": "Select a Pokémon species"
+    },
     "sprite": {
       "alt": "{name}’s Sprite",
       "title": "Sprites"
     },
     "stamina": "Stamina",
+    "tier": {
+      "format": "Tier: {tier}"
+    },
     "type": {
       "alt": "{type} Type Badge",
       "label": "Type"
@@ -160,8 +202,13 @@
       "isDefault": "Default",
       "title": "Varieties"
     },
+    "variety": {
+      "label": "Variety",
+      "placeholder": "Select a Pokémon variety"
+    },
     "vitality": "Vitality"
   },
+  "search": "Search",
   "theme": {
     "title": "Theme",
     "auto": "Auto",
