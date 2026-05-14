@@ -70,13 +70,13 @@
         <BattleDefenseInput :id="`${id}-defense`" :model-value="matchup.defense" required @update:model-value="battle.setMatchupDefense(matchup.id, $event)" />
       </div>
     </div>
-    <div class="row text-center">
-      <div class="col mb-3">
-        <TarCard :title="$t('pokemon.battle.damage')">{{ damage }}</TarCard>
+    <div class="row">
+      <div class="col-md-6">
+        <h2 class="h3">{{ $t("pokemon.battle.damage.format", { damage: $n(damage, "integer") }) }}</h2>
       </div>
-    </div>
-    <div class="text-end">
-      <TarButton icon="fas fa-xmark" :text="$t('actions.remove')" variant="danger" @click="battle.removeMatchup(matchup.id)" />
+      <div class="col-md-6 text-end">
+        <TarButton icon="fas fa-xmark" :text="$t('actions.remove')" variant="danger" @click="battle.removeMatchup(matchup.id)" />
+      </div>
     </div>
   </div>
 </template>
@@ -125,22 +125,19 @@ function setMultipleTargets(value: boolean): void {
 /* TODO(fpion):
  * Attack Stage
  * Defense Stage
- * Weather is
- * - 1.5 if a Water-type move is being used during rain or a Fire-type move or Hydro Steam during harsh sunlight,
- * - and 0.5 if a Water-type move (besides Hydro Steam) is used during harsh sunlight or a Fire-type move during rain,
- * - and 1 otherwise or if any Pokémon on the field have the Ability Cloud Nine or Air Lock.
- * Critical is 1.5 for a critical hit, and 1 otherwise. Decimals are rounded down to the nearest integer. It is always 1 if the target's Ability is Battle Armor or Shell Armor or if the target is under the effect of Lucky Chant.
+ * Critical is 1.5 for a critical hit, and 1 otherwise. Decimals are rounded down to the nearest integer. It is always 1 if the target’s Ability is Battle Armor or Shell Armor or if the target is under the effect of Lucky Chant.
  * STAB is the same-type attack bonus.
- * - This is equal to 1.5 if the move's type matches any of the user's type,
+ * - This is equal to 1.5 if the move’s type matches any of the user’s type,
  * - 2 if the user of the move additionally has Adaptability,
  * - and 1 otherwise.
  * - When Terastallized, STAB is (if not 1):
- *   - 1.5 if the move's type matches either the Pokemon's original type(s) or a different Tera Type from its original types, and the attacker's Ability is not Adaptability.
- *   - 2 if the move's type matches the same Tera Type as one of the Pokemon's original types and the attacker's Ability is not Adaptability, or the situation above, if the attacker's Ability is Adaptability.
- *   - However, if STAB only applies from the attacker's original type(s), not its Tera Type, STAB will always be 1.5, even if the attacker's Ability is Adaptability.
+ *   - 1.5 if the move’s type matches either the Pokemon’s original type(s) or a different Tera Type from its original types, and the attacker’s Ability is not Adaptability.
+ *   - 2 if the move’s type matches the same Tera Type as one of the Pokemon’s original types and the attacker’s Ability is not Adaptability, or the situation above, if the attacker’s Ability is Adaptability.
+ *   - However, if STAB only applies from the attacker’s original type(s), not its Tera Type, STAB will always be 1.5, even if the attacker’s Ability is Adaptability.
  * Type Effectiveness: 0, 1/8, 1/4, 1/2, 1, 2, 4 or 8
  * Burn is 0.5 if the attacker is burned, its Ability is not Guts, and the used move is a physical move (other than Facade from Generation VI onward), and 1 otherwise.
- * Other (including Parental Bond and Glaive Rush)
+ * Other (including Weather, Parental Bond and Glaive Rush)
+ * Strong & Agile Style Moves
  */
 
 // TODO(fpion): calculer l’Accuracy et l’Evasion.

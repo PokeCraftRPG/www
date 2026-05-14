@@ -30,7 +30,10 @@
         "format": "Attacker: {name}",
         "label": "Attacker"
       },
-      "damage": "Damage",
+      "damage": {
+        "format": "Damage: {damage}",
+        "label": "Damage"
+      },
       "statistic": {
         "attack": "Attack",
         "defense": "Defense"
