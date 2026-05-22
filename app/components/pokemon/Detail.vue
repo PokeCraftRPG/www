@@ -286,8 +286,8 @@ const sizeMultiplier = computed<number>(() => {
   }
   return 1;
 });
-const height = computed<number>(() => (form.value?.height ?? 0 / 10) * sizeMultiplier.value);
-const weight = computed<number>(() => (form.value?.weight ?? 0 / 10) * sizeMultiplier.value);
+const height = computed<number>(() => ((form.value?.height ?? 0) / 10) * sizeMultiplier.value);
+const weight = computed<number>(() => ((form.value?.weight ?? 0) / 10) * sizeMultiplier.value);
 
 function selectAbility(selectedAbility: Ability): void {
   ability.value = selectedAbility;
