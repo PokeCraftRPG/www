@@ -10,9 +10,7 @@
         <TarCard class="d-flex flex-column h-100" :title="$t('pokemon.capture.difficulty')">{{ $n(pokemon.captureDifficulty, "integer") }}</TarCard>
       </div>
       <div class="col-sm-6 mb-3">
-        <TarCard class="d-flex flex-column h-100" :title="$t('pokemon.capture.baseFriendship')">{{
-          $n(pokemon.species.baseFriendship * 0.4, "integer")
-        }}</TarCard>
+        <TarCard class="d-flex flex-column h-100" :title="$t('pokemon.friendship.base')">{{ $n(pokemon.species.baseFriendship * 0.4, "integer") }}</TarCard>
       </div>
     </div>
   </div>

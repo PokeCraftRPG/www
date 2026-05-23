@@ -70,7 +70,6 @@
       "label": "Breeding"
     },
     "capture": {
-      "baseFriendship": "Starting Friendship",
       "difficulty": "Difficulty Class (DC)",
       "title": "Capture"
     },
@@ -115,6 +114,12 @@
       },
       "title": "Forms",
       "types": "Types"
+    },
+    "friendship": {
+      "base": "Starting Friendship",
+      "condition": "Condition",
+      "event": "Event",
+      "title": "Friendship"
     },
     "gender": {
       "female": "Female",

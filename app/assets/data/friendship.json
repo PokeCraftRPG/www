@@ -1,0 +1,300 @@
+[
+  {
+    "text": "Spending time together",
+    "changes": [
+      {
+        "condition": "50% (½) chance to occur each day",
+        "low": 1
+      },
+      {
+        "condition": "25% (¼) chance to occur each day",
+        "medium": 1
+      },
+      {
+        "condition": "12.5% (⅛) chance to occur each day",
+        "high": 1
+      }
+    ]
+  },
+  {
+    "text": "Level-up",
+    "changes": [
+      {
+        "condition": "Anywhere except met location, or without a Rare Candy",
+        "low": 2,
+        "medium": 1,
+        "high": 0
+      },
+      {
+        "condition": "At met location, or using a Rare Candy",
+        "low": 4,
+        "medium": 2,
+        "high": 1
+      }
+    ]
+  },
+  {
+    "text": "Fainting",
+    "changes": [
+      {
+        "condition": "Opponent Tier is lower or equal",
+        "low": -1,
+        "medium": -1,
+        "high": -1
+      },
+      {
+        "condition": "Opponent Tier is higher",
+        "low": -1,
+        "medium": -2,
+        "high": -4
+      }
+    ]
+  },
+  {
+    "text": "Surviving Poison",
+    "changes": [
+      {
+        "low": -2,
+        "medium": -3,
+        "high": -4
+      }
+    ]
+  },
+  {
+    "text": "Battle Item, Feather, Power Item or Technical Machine (TM)",
+    "changes": [
+      {
+        "low": 1,
+        "medium": 0,
+        "high": 0
+      }
+    ]
+  },
+  {
+    "text": "Poffin or Soda",
+    "changes": [
+      {
+        "low": 1,
+        "medium": 1,
+        "high": 1
+      }
+    ]
+  },
+  {
+    "text": "Vitamin",
+    "changes": [
+      {
+        "low": 2,
+        "medium": 1,
+        "high": 0
+      }
+    ]
+  },
+  {
+    "text": "Friendship-raising berry",
+    "changes": [
+      {
+        "low": 4,
+        "medium": 2,
+        "high": 1
+      }
+    ]
+  },
+  {
+    "text": "Herbal Medicine",
+    "changes": [
+      {
+        "condition": "Energy Power or Heal Powder",
+        "low": -2,
+        "medium": -3,
+        "high": -4
+      },
+      {
+        "condition": "Energy Root",
+        "low": -4,
+        "medium": -5,
+        "high": -6
+      },
+      {
+        "condition": "Revival Herb",
+        "low": -6,
+        "medium": -7,
+        "high": -8
+      }
+    ]
+  },
+  {
+    "text": "Battling against an Elite Trainer",
+    "changes": [
+      {
+        "low": 2,
+        "medium": 1,
+        "high": 0
+      }
+    ]
+  },
+  {
+    "text": "Winning a Contest",
+    "changes": [
+      {
+        "condition": "Standard Contest",
+        "low": 1,
+        "medium": 1,
+        "high": 1
+      },
+      {
+        "condition": "Super Contest",
+        "low": 2,
+        "medium": 2,
+        "high": 2
+      }
+    ]
+  },
+  {
+    "text": "Café or Food Stall",
+    "changes": [
+      {
+        "condition": "Friendly Drink",
+        "low": 2,
+        "medium": 2,
+        "high": 2
+      },
+      {
+        "condition": "Friendly Lunch",
+        "low": 4,
+        "medium": 4,
+        "high": 4
+      },
+      {
+        "condition": "Friendly Combo",
+        "low": 8,
+        "medium": 8,
+        "high": 8
+      }
+    ]
+  },
+  {
+    "text": "Juice Shoppe",
+    "changes": [
+      {
+        "condition": "Depends on Berries used (between +5 and +13)"
+      }
+    ]
+  },
+  {
+    "text": "Fountain of Luck",
+    "changes": [
+      {
+        "condition": "5.00$",
+        "low": 1,
+        "medium": 1,
+        "high": 1
+      },
+      {
+        "condition": "50.00$",
+        "low": 8,
+        "medium": 8,
+        "high": 8
+      }
+    ]
+  },
+  {
+    "text": "Beauty Salon",
+    "changes": [
+      {
+        "condition": "Brushing",
+        "low": 4,
+        "medium": 4,
+        "high": 4
+      },
+      {
+        "condition": "Shampoo or Makeup",
+        "low": 8,
+        "medium": 8,
+        "high": 8
+      },
+      {
+        "condition": "Smile Cut",
+        "low": 12,
+        "medium": 12,
+        "high": 12
+      },
+      {
+        "condition": "Beauty Cut",
+        "low": 16,
+        "medium": 16,
+        "high": 16
+      },
+      {
+        "condition": "Royal Cut",
+        "low": 20,
+        "medium": 20,
+        "high": 20
+      }
+    ]
+  },
+  {
+    "text": "Grooming",
+    "changes": [
+      {
+        "condition": "“a little happier…”",
+        "low": 1,
+        "medium": 1,
+        "high": 0
+      },
+      {
+        "condition": "“happy.”",
+        "low": 2,
+        "medium": 2,
+        "high": 1
+      },
+      {
+        "condition": "“delighted!”",
+        "low": 4,
+        "medium": 4,
+        "high": 3
+      }
+    ]
+  },
+  {
+    "text": "Hot Springs",
+    "changes": [
+      {
+        "low": 2,
+        "medium": 2,
+        "high": 2
+      }
+    ]
+  },
+  {
+    "text": "Massage",
+    "changes": [
+      {
+        "condition": "“a little more…”",
+        "low": 1,
+        "medium": 1,
+        "high": 1
+      },
+      {
+        "condition": "“more.”",
+        "low": 2,
+        "medium": 2,
+        "high": 2
+      },
+      {
+        "condition": "“much more!”",
+        "low": 4,
+        "medium": 4,
+        "high": 4
+      }
+    ]
+  },
+  {
+    "text": "Purification",
+    "changes": [
+      {
+        "low": 20
+      }
+    ]
+  }
+]
